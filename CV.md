@@ -2,8 +2,6 @@
 layout: CV
 title: CV
 ---
-Johnny Coder
-============
 
 -------------------     ----------------------------
 1 MyAddress                        email@example.com

@@ -1,23 +1,13 @@
 ---
-layout: CV
-common-css:
-  - "/css/CV.css"
+layout: base-cv
+title: Curriculum vitae
 ---
-
-<!DOCTYPE html>
-<html lang="en">
-
-  {% include head.html %}
-
-  <body>
-
-    <div role="main" class="container main-content">
+{% include head.html %}{% include header.html type="page" %} 
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       {{ content }}
     </div>
+  </div>
+</div>
 
-    {% include footer-minimal.html %}
-
-    {% include footer-scripts.html %}
-
-  </body>
-</html>

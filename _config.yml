@@ -23,8 +23,9 @@ description: Jeremias Brand's Website
 
 # List of links in the navigation bar
 navbar-links:
-  #About Me: "aboutme"
+  About Me: "aboutme"
   CV: "CV"
+  CV?: "http://jeremias-brand.github.io/files/CV_only.pdf"
   Resources:
     - Beautiful Jekyll: "http://deanattali.com/beautiful-jekyll/"
     - Learn markdown: "http://www.markdowntutorial.com/"
@@ -166,6 +167,7 @@ prose:
     - /_includes
     - /css
     - /img
+    - /files
     - /js
   metadata:
     _posts:
