@@ -8,7 +8,7 @@ I am an evolutionary biologist interested in sexual selection and its impact on 
 
 In my PhD project I will extend the current phylogeny of the genus using RNAseq data we will generate from approximately 100 species of Macrostomum. We aim to resample 50 species already included in a phylogeny based on four genes and collect 50 novel species in the wide range of regions and habitats that have not been examined by investigators so far. RNAseq data will also give us the opportunity to investigate possible signatures of selection on reproductive genes. This project will also extend our knowledge of genital morphology in this genus in particular the, until now poorly described, female genitalia. The sclerotized structure of the male copulatory organ (stylet) is easily visible in the light microscope and is an important taxonomic trait in Macrostomum. The female genitalia, however, are more difficult to see in the light microscope and so were neglected by many investigators. We will use Serial Block Face Scanning Electron Microscopy to investigate it the female morphology further. Since most Macrostomum species are small we can produce serial sections of the entire worm in a single run, giving us unprecedented insights into the detailed morphology of these creatures. Ultimately I aim to combine the detailed morphological observations with the molecular phylogeny to describe the dynamics of the evolution of sex allocation and its correlates in Macrostomum.
 
-![image-title-here](https://jeremias-brand.github.io/img/hello_world.jpeg){:class="img-responsive"}
+![image-title-here]{{ site.url }}{:class="img-responsive"}
 
 We can include code snippets in the posts:
 
