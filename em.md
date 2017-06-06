@@ -19,7 +19,7 @@ Using this technique we can get images of up to 7nm pixle size.
 <picture of an entier worm in section.>
 
 On this image we see a cross section through an entier animal. The thin spaghetti like appendages on the perifery of the animal are [cilia](https://en.wikipedia.org/wiki/Cilium) that cover the entier surface of the worms body. Smaller cilia are used for locomotion and beat in a synchronized wave front and larger cilia are immotile and are used for the detection of sensory stimulus. 
-Below the cilia we see the epidermis cells with very prominent [nuclei](http://en.wikipedia.org/wiki/Cell_nucleus). These nuclei are not round like in most other cells but multi lobed which sometimes gives them a strange appearance. Centrally we can also see some cilia again but this time they are actually on the inside ofthe animal ligning the gut. Cilia in the gut are longer than the ones on the epidermis and they are less synchronized in their beating. They are used to transport food particles up and down the digestive tract. 
+Below the cilia we see the epidermis cells with very prominent [nuclei](http://en.wikipedia.org/wiki/Cell_nucleus) . These nuclei are not round like in most other cells but multi lobed which sometimes gives them a strange appearance. Centrally we can also see some cilia again but this time they are actually on the inside ofthe animal ligning the gut. Cilia in the gut are longer than the ones on the epidermis and they are less synchronized in their beating. They are used to transport food particles up and down the digestive tract. 
 
 <image of femal opening>
 this image shows a cross section though the female genital opening. Note that it is also ciliated and the chamber below it (the femal antrum) also bears cilia. 
