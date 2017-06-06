@@ -29,6 +29,8 @@ this image shows a cross section though the female genital opening. Note that it
 #image of sv
 Here we see the seminal vesicle. THis is where sperm is stored before copulation. The seminal vesicle is surounded by large circular musculature. 
 
+![alt text](https://jeremias-brand.github.io/img/MTPJB0098_BS_roi_00_slice_1091.png "Logo Title Text 1")
+
 #image of reconstructed stylet
 since the serial sections allow us to trace structures along the animal we an also reconstruct them. Here you can see a 3d reconstruction of the male copulatory organ - the stylet. It has quite a complex structure with a complicate slightly corkscrew shaped curve to it. From 2D images it is difficulte to completely grasp the sutelties of this turn but we can see it quite easily in the reconstruction. 
 The stylet morphology varies drastically across the phylogeny as illustrated nicely when we compare the stylets of several species:
