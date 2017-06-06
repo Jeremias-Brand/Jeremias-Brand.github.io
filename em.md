@@ -15,6 +15,7 @@ SBFSEM combines a standard SEM with a microtome that is mounted inside the micro
 {% include youtubePlayer.html id=page.PWbLA7WMd34 %}
 
 Using this technique we can get images of up to 7nm pixle size.
+[nuclei](http://en.wikipedia.org/wiki/Cell_nucleus)
 
 <picture of an entier worm in section.>
 
