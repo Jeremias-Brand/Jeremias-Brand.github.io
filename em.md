@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Electron Microscopy
-bigimg: img/MTP_2713_sv_stylet_crop.png
+bigimg: img/MTP_2713_sv_stylet_crop2.png
 ---
 
 *Macrostomum* flatworms are transparent which allows us to study they internal organs - in particular their genital morphology - in detail without the need for dissections or histological preparations. However there always remains the lingering suspicion that some important aspects of morphology might be missed because they are not easily visible in the light microscope. To address this issue I am using a specialized electron microscopy technique called Serial Block Face Scanning Electron Microscopy (SBFSEM) to produce serial sections of some animals and examine their morphology in more detail.
