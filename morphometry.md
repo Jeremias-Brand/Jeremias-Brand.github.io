@@ -1,26 +1,15 @@
 ---
 layout: page
-title: Phylogeny
-bigimg: /img/gastrotrich_diversity_2.jpg
+title: Worm Morphology
+bigimg: /img/diversity_stylet_2.png
 ---
 
-I am an evolutionary biologist interested in sexual selection and its impact on animal morphology and ecological diversity. My research approach combines classical morphological observations with modern phylogenomics and computational methods to investigate sexual antagonism and sex allocation in hermaphrodites. Flatworms of the genus Macrostomum are ideally suited to study these questions because they are transparent allowing us to make detailed observations of the gonads and copulatory organs in situ. We can use these observations to directly estimate their investment into the production of sperm versus production of eggs without the need for histological sections. We can then use the same specimens for further downstream analysis like RNAseq or electron microscopy.
+[*Macrostomum*](https://en.wikipedia.org/wiki/Macrostomum)
+flatworms are small aquatic animals with a global distribution. They inhabit a variety of habitats from the interstitial spaces between sand grains on beaches to freshwater ponds attached to vegetation and they can even be found in wet moss. The worms are very small - between 1 - 3 millimeter in length - which means we can only look at them with a microscope. If we do that we quickly notice two things: They are transparent, which allows us to study their internal organs *in vivo* and they are an incredibly diverse group. *Macrostomum* show an large diversity in their body size and shape. You can see that clearly with these few examples:
 
-In my PhD project I will extend the current phylogeny of the genus using RNAseq data we will generate from approximately 100 species of Macrostomum. We aim to resample 50 species already included in a phylogeny based on four genes and collect 50 novel species in the wide range of regions and habitats that have not been examined by investigators so far. RNAseq data will also give us the opportunity to investigate possible signatures of selection on reproductive genes. This project will also extend our knowledge of genital morphology in this genus in particular the, until now poorly described, female genitalia. The sclerotized structure of the male copulatory organ (stylet) is easily visible in the light microscope and is an important taxonomic trait in Macrostomum. The female genitalia, however, are more difficult to see in the light microscope and so were neglected by many investigators. We will use Serial Block Face Scanning Electron Microscopy to investigate it the female morphology further. Since most Macrostomum species are small we can produce serial sections of the entire worm in a single run, giving us unprecedented insights into the detailed morphology of these creatures. Ultimately I aim to combine the detailed morphological observations with the molecular phylogeny to describe the dynamics of the evolution of sex allocation and its correlates in Macrostomum.
 
 ![image-title-here]({{ site.url }}/img/Macrostomum_diversity_V2.png){:class="img-responsive"}
 
-We can include code snippets in the posts:
+Not only body shape varies but also the morphology of the copulatory organs. The stylet (male copulatory organ) also has quite interesting shapes. Note that these images are to scale.
 
-{% highlight python %}
-import sys
-from coffee import *
-for i in range (99):
-    print(i)
-
-class Complex:
-     def __init__(self, realpart, imagpart):
-         self.r = realpart
-         self.i = imagpart
-
-{% endhighlight %}
+![image-title-here]({{ site.url }}/img/diversity_stylet.png){:class="img-responsive"}
