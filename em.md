@@ -7,10 +7,10 @@ title: Electron Microscopy
 
 Here will be content about serial block face imaging 
 
-*Macrostomum* flatworms are transparant which allows us to study they internal organs - in praticular their genital morphology - in detail without the need for disections or histological preprations. However there always remains the lingering suspicion that some important aspects of morphology might be missed because they are not easily visible in the light microscope. To adress this issue I am using a specialized electron microscopy technique called Serial Block Face Scanning Electron Microscopy (SBFSEM) to produce serial sections of some animals and examine the genital morphology in more detail.
-SBFSEM combines a standard SEM with a microtome that is mounted inside the microscope. The machine scans the block with the electron beam and the backscatter is then analyzed yieling images that can rival TEM quality. After scanning the microtome in the machine removes a slice and then repeates the process. This is nicely vizualized in this video from Gatan.
+*Macrostomum* flatworms are transparent which allows us to study they internal organs - in particular their genital morphology - in detail without the need for dissections or histological preparations. However there always remains the lingering suspicion that some important aspects of morphology might be missed because they are not easily visible in the light microscope. To address this issue I am using a specialized electron microscopy technique called Serial Block Face Scanning Electron Microscopy (SBFSEM) to produce serial sections of some animals and examine their morphology in more detail.
+SBFSEM combines a standard SEM with a microtome that is mounted inside the microscope. The machine scans the block with the electron beam and the backscatter is then analyzed yielding images that can rival TEM quality. After scanning the microtome in the machine removes a slice and then repeats the process. This is nicely vizualized in this video from Gatan.
 
-{% include youtubePlayer.html id=page.PWbLA7WMd34 %}
+{% include youtubePlayer.html id=page.DCS6t6NUAGQ %}
 
 Using this technique we can get images of up to 7nm pixle size.
 
