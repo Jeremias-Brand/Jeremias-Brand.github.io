@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Phylogeny
-image: /img/hello_world.jpeg
+image: /img/Macrostomum_diversity_V2.png
 ---
 
 I am an evolutionary biologist interested in sexual selection and its impact on animal morphology and ecological diversity. My research approach combines classical morphological observations with modern phylogenomics and computational methods to investigate sexual antagonism and sex allocation in hermaphrodites. Flatworms of the genus Macrostomum are ideally suited to study these questions because they are transparent allowing us to make detailed observations of the gonads and copulatory organs in situ. We can use these observations to directly estimate their investment into the production of sperm versus production of eggs without the need for histological sections. We can then use the same specimens for further downstream analysis like RNAseq or electron microscopy.
