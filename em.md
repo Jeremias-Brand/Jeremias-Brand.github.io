@@ -32,7 +32,7 @@ Here we see a cut through the same animal but more posterior. On the top there i
 Since the serial sections allow us to trace structures along the animal we can also reconstruct them. Here you can see a 3D reconstruction of the male copulatory organ - the stylet. It has quite a complex structure with a complicate slightly corkscrew shaped curve to it. From 2D images it is difficult to completely grasp the subtleties of this turn but we can see it quite easily in the reconstruction. 
 The stylet morphology varies drastically across the phylogeny as illustrated nicely when we compare the stylets of several species:
 
-**Coming soon**
+**Coming soonish**
 
 
 
