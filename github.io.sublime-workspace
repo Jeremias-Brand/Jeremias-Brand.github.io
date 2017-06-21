@@ -44,6 +44,57 @@
 				"buffer_size": 66,
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 2025,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "em.md",
+			"settings":
+			{
+				"buffer_size": 4221,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "---\nlayout: page\ntitle: Phylogeny\n---\n\n## Under construction ##\n\nHere will be content about trees and the workflow.\n",
+			"file": "phy.md",
+			"file_size": 209,
+			"file_write_time": 131420750574455787,
+			"settings":
+			{
+				"buffer_size": 116,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "_config.yml",
+			"settings":
+			{
+				"buffer_size": 5528,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "aboutme.md",
+			"settings":
+			{
+				"buffer_size": 2221,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/media/Shared/Dropbox/Documents/Notebooks/techniques/github.io.txt",
+			"settings":
+			{
+				"buffer_size": 1846,
+				"line_ending": "Unix"
+			}
 		}
 	],
 	"build_system": "",
