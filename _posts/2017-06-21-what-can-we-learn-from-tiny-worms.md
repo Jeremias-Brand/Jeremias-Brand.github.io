@@ -1,7 +1,7 @@
 ---
 layout: post
 title: What can we learn from tiny worms?
-subtitle: A brief outlien of my PhD project.
+subtitle: A brief outline of my PhD project.
 bigimg: /img/anfora15_boat.jpg
 ---
 
