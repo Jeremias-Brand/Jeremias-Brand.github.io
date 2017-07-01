@@ -12,6 +12,9 @@
 	[
 		{
 			"path": "."
+		},
+		{
+			"path": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans"
 		}
 	]
 }
