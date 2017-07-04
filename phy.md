@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Phylogeny
+show-avatar: false
 ---
 
 ## Phylogenetic dependence ##

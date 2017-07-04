@@ -2,6 +2,7 @@
 layout: page
 title: Worm Morphology
 bigimg: /img/diversity_stylet_2.png
+show-avatar: false
 ---
 
 [*Macrostomum*](https://en.wikipedia.org/wiki/Macrostomum)
