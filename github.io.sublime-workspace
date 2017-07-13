@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"rev",
+				"reverse_trimmed	statement"
+			],
+			[
+				"forward",
+				"forward_trimmed	statement"
+			],
+			[
 				"pa",
 				"path	module"
 			],
@@ -16,53 +24,10 @@
 	"buffers":
 	[
 		{
-			"file": "/home/jeremias/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
-			"settings":
-			{
-				"buffer_size": 20815,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "morphometry.md",
 			"settings":
 			{
-				"buffer_size": 1152,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/jeremias/.config/sublime-text-3/Packages/User/Anaconda.sublime-settings",
-			"settings":
-			{
-				"buffer_size": 66,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "index.html",
-			"settings":
-			{
-				"buffer_size": 2025,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "em.md",
-			"settings":
-			{
-				"buffer_size": 4221,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "---\nlayout: page\ntitle: Phylogeny\n---\n\n## Under construction ##\n\nHere will be content about trees and the workflow.\n",
-			"file": "phy.md",
-			"file_size": 209,
-			"file_write_time": 131420750574455787,
-			"settings":
-			{
-				"buffer_size": 116,
+				"buffer_size": 1171,
 				"line_ending": "Unix"
 			}
 		},
@@ -70,7 +35,96 @@
 			"file": "_config.yml",
 			"settings":
 			{
-				"buffer_size": 5528,
+				"buffer_size": 5596,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 2016,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "em.md",
+			"settings":
+			{
+				"buffer_size": 4199,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/media/Shared/Dropbox/Bioinformatics/Bio_Server/Website_and_Server_access.txt",
+			"settings":
+			{
+				"buffer_size": 341,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "phy.md",
+			"settings":
+			{
+				"buffer_size": 1256,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "ILLUMINACLIP:TruSeq3\n-\nSE:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 \n\ntrimmomatic-0.36.jar PE -basein ./data/Macmini1.fq.gz -baseout ./test/Macmini1 ILLUMINACLIP:/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa:2:40:15 LEADING:30 TRAILING:30 MINLEN:25 -threads 14 -phred33\n\n\n\njava -jar trimmomatic-0.36.jar PE s_1_1_sequence.txt.gz s_1_2_sequence.txt.gz lane1_forward_paired.fq.gz lane1_forward_unpaired.fq.gz lane1_reverse_paired.fq.gz lane1_reverse_unpaired.fq.gz ILLUMINACLIP:\"/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa\":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36\n\n\ntrimmomatic-0.36.jar PE ./data/Macmini1_R1.fq.gz ./data/Macmini1_R2.fq.gz lane1_forward_paired.fq.gz lane1_forward_unpaired.fq.gz lane1_reverse_paired.fq.gz lane1_reverse_unpaired.fq.gz ILLUMINACLIP:\"/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa\":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36\n\ntrimmomatic-0.36.jar PE ./data/Macmini1_R1.fq.gz ./data/Macmini1_R2.fq.gz lane1_forward_paired.fq.gz lane1_forward_unpaired.fq.gz lane1_reverse_paired.fq.gz lane1_reverse_unpaired.fq.gz ILLUMINACLIP:\"/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa\":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36",
+			"settings":
+			{
+				"buffer_size": 1276,
+				"line_ending": "Unix",
+				"name": "ILLUMINACLIP:TruSeq3"
+			}
+		},
+		{
+			"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/slide-backgrounds.html",
+			"settings":
+			{
+				"buffer_size": 4083,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/simple.md",
+			"settings":
+			{
+				"buffer_size": 64,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/embedded-media.html",
+			"settings":
+			{
+				"buffer_size": 1365,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/slides-dd.html",
+			"settings":
+			{
+				"buffer_size": 1140126,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.main.small.snake",
+			"settings":
+			{
+				"buffer_size": 15196,
 				"line_ending": "Unix"
 			}
 		},
@@ -89,6 +143,47 @@
 				"buffer_size": 1846,
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.soap.snake",
+			"settings":
+			{
+				"buffer_size": 16251,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "velveth velvet 31 -longPaired -separate -fastq.gz   data/Macmini1_R1.fq.gz data/Macmini1_R2.fq.gz\n\n velvetg velvet_31 -read_trkg yes\n",
+			"settings":
+			{
+				"buffer_size": 133,
+				"line_ending": "Unix",
+				"name": "velveth velvet 31 -longPaired -separate -fastq.gz"
+			}
+		},
+		{
+			"contents": "## Phylogenetic dependence ##\n\nSince I am studying the evolution of sexual tratis, it is crucial to have a good estimate of the phylogeny. This is because the morphology different species is not statistically independent but dependent through a common evolutionary history. We would for example assume that closely related species also tend to look similar. If we want to test for correlations between traits we need to take this dependence into account and we can do that by correcting our test for phylogeny. \n\n## RNAseq ##\n\nWe are infering phylogenies using RNA sequencing. In this method we exctract the enierty of RNA present in a whole animal and sequence it using next generation sequencing. This then gives us access to all the genes that are currently being transcribed in this specimen. After sequencing the RNA needs to be put together into transcriptomes - that is the set of all expressed transcripts. I am currently working on a bioinformatics pipeline to do this. Here is a drawing of the pipeline when it is given two batches of sequences.\n\n![alt text](https://jeremias-brand.github.io/img/macpipe_trans_concept.png \"directed acyclic graph of the transcriptome assembly pipeline\")",
+			"settings":
+			{
+				"buffer_size": 1196,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/config.dev.yaml",
+			"settings":
+			{
+				"buffer_size": 1402,
+				"line_ending": "Unix"
+			}
 		}
 	],
 	"build_system": "",
@@ -98,10 +193,22 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 352.0,
-		"last_filter": "wo",
+		"height": 392.0,
+		"last_filter": "an",
 		"selected_items":
 		[
+			[
+				"an",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"py",
+				"Set Syntax: Python"
+			],
+			[
+				"ana lin",
+				"Anaconda: Disable linting on this file"
+			],
 			[
 				"wo",
 				"Word Wrap: Toggle"
@@ -205,10 +312,15 @@
 	"expanded_folders":
 	[
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/img"
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans"
 	],
 	"file_history":
 	[
+		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/barebones.html",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_config.yml",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/phy.md",
+		"/home/jeremias/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/home/jeremias/.config/sublime-text-3/Packages/User/Anaconda.sublime-settings",
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/img/MTP_2713_sv_stylet_crop.png",
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/em.md",
 		"/media/Shared/Dropbox/Media/Egypt_2015/Egypt15_images_video/GOPR0331.JPG",
@@ -216,9 +328,7 @@
 		"/media/Shared/Dropbox/Bioinformatics/dev/pull_seq_from_transcriptome/fish_genes.py",
 		"/media/Shared/Dropbox/Bioinformatics/Reports/macpipe_trans/macpipe.trans.stamp.small.snake",
 		"/media/Shared/Dropbox/Bioinformatics/Reports/macpipe_trans/macpipe.trans.main.small.snake",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/phy.md",
 		"/media/Shared/Dropbox/Bioinformatics/Reports/macpipe_trans/macpipe.trans.timestamp.snake",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_config.yml",
 		"/media/Shared/Dropbox/Bioinformatics/Scripts/Python/hackerrank/30_day_of_code/11-hourglass.py",
 		"/media/Shared/Dropbox/Mendeley/unread/~$Uyeda_et _al_2015.pdf",
 		"/media/Shared/Dropbox/Bioinformatics/Reports/macpipe_trans/macpipe.trans.small.snake_from_server170601",
@@ -326,6 +436,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"bigim",
+			"imgfbigim",
 			"Macrostomum",
 			"E309",
 			"???",
@@ -436,58 +548,29 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/home/jeremias/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 20815,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								77,
-								77
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "morphometry.md",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1152,
+						"buffer_size": 1171,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								639,
-								639
+								98,
+								98
 							]
 						],
 						"settings":
 						{
+							"history_list_is_closing": true,
 							"spell_check": true,
 							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
 						},
@@ -495,138 +578,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "/home/jeremias/.config/sublime-text-3/Packages/User/Anaconda.sublime-settings",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 66,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								66,
-								66
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2025,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								107,
-								107
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 285.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "em.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4221,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								80,
-								80
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "phy.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 116,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								116,
-								116
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
+					"buffer": 1,
 					"file": "_config.yml",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5528,
+						"buffer_size": 5596,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								499,
-								499
+								1198,
+								1198
 							]
 						],
 						"settings":
@@ -639,11 +608,337 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2016,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 285.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 17,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "em.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4199,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								161,
+								161
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/media/Shared/Dropbox/Bioinformatics/Bio_Server/Website_and_Server_access.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 341,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								341,
+								341
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "phy.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1256,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								52,
+								52
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1276,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								953,
+								953
+							]
+						],
+						"settings":
+						{
+							"auto_name": "ILLUMINACLIP:TruSeq3",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
 					"buffer": 7,
+					"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/slide-backgrounds.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4083,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2413.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/simple.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 64,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								51,
+								51
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/embedded-media.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1365,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1061,
+								1061
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 83.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/slides-dd.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1140126,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								161876,
+								161876
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 53182.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.main.small.snake",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15196,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3234,
+								3234
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1995.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
 					"file": "aboutme.md",
 					"semi_transient": false,
 					"settings":
@@ -667,11 +962,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 18,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 14,
 					"file": "/media/Shared/Dropbox/Documents/Notebooks/techniques/github.io.txt",
 					"semi_transient": false,
 					"settings":
@@ -695,7 +990,169 @@
 						"translation.y": 741.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 19,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 15,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.soap.snake",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16251,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3550,
+								3550
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2166.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 133,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								133,
+								133
+							]
+						],
+						"settings":
+						{
+							"auto_name": "velveth velvet 31 -longPaired -separate -fastq.gz",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1196,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								510,
+								510
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/config.dev.yaml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1402,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								653,
+								653
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/YAML/YAML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
 					"type": "text"
 				}
 			]
@@ -703,7 +1160,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 27.0
+		"height": 35.0
 	},
 	"input":
 	{
@@ -718,11 +1175,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.48604401503,
 			1.0
 		],
 		"rows":
@@ -753,6 +1217,14 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"confi",
+				"macpipe_trans/config.dev.yaml"
+			],
+			[
+				"mac",
+				"macpipe_trans/macpipe.soap.snake"
+			],
 			[
 				"draf/em",
 				"drafts/em.md"
