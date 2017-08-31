@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"past",
+				"pasta_aln	statement"
+			],
+			[
+				"maff",
+				"mafft_aln	statement"
+			],
+			[
+				"cores",
+				"cores_per_job	param"
+			],
+			[
+				"run",
+				"run_up_to_blast"
+			],
+			[
+				"chun",
+				"chunk_id	statement"
+			],
+			[
 				"rev",
 				"reverse_trimmed	statement"
 			],
@@ -24,88 +44,14 @@
 	"buffers":
 	[
 		{
-			"file": "morphometry.md",
+			"file": "/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/tutorials/part3_homology_orthology.md",
 			"settings":
 			{
-				"buffer_size": 1171,
+				"buffer_size": 10447,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "_config.yml",
-			"settings":
-			{
-				"buffer_size": 5596,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "index.html",
-			"settings":
-			{
-				"buffer_size": 2016,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "em.md",
-			"settings":
-			{
-				"buffer_size": 4199,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Bioinformatics/Bio_Server/Website_and_Server_access.txt",
-			"settings":
-			{
-				"buffer_size": 341,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "phy.md",
-			"settings":
-			{
-				"buffer_size": 1256,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "ILLUMINACLIP:TruSeq3\n-\nSE:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 \n\ntrimmomatic-0.36.jar PE -basein ./data/Macmini1.fq.gz -baseout ./test/Macmini1 ILLUMINACLIP:/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa:2:40:15 LEADING:30 TRAILING:30 MINLEN:25 -threads 14 -phred33\n\n\n\njava -jar trimmomatic-0.36.jar PE s_1_1_sequence.txt.gz s_1_2_sequence.txt.gz lane1_forward_paired.fq.gz lane1_forward_unpaired.fq.gz lane1_reverse_paired.fq.gz lane1_reverse_unpaired.fq.gz ILLUMINACLIP:\"/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa\":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36\n\n\ntrimmomatic-0.36.jar PE ./data/Macmini1_R1.fq.gz ./data/Macmini1_R2.fq.gz lane1_forward_paired.fq.gz lane1_forward_unpaired.fq.gz lane1_reverse_paired.fq.gz lane1_reverse_unpaired.fq.gz ILLUMINACLIP:\"/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa\":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36\n\ntrimmomatic-0.36.jar PE ./data/Macmini1_R1.fq.gz ./data/Macmini1_R2.fq.gz lane1_forward_paired.fq.gz lane1_forward_unpaired.fq.gz lane1_reverse_paired.fq.gz lane1_reverse_unpaired.fq.gz ILLUMINACLIP:\"/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa\":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36",
-			"settings":
-			{
-				"buffer_size": 1276,
-				"line_ending": "Unix",
-				"name": "ILLUMINACLIP:TruSeq3"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/slide-backgrounds.html",
-			"settings":
-			{
-				"buffer_size": 4083,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/simple.md",
-			"settings":
-			{
-				"buffer_size": 64,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/embedded-media.html",
-			"settings":
-			{
-				"buffer_size": 1365,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "",
 			"settings":
 			{
 				"buffer_size": 0,
@@ -113,75 +59,32 @@
 			}
 		},
 		{
-			"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/slides-dd.html",
+			"contents": "\"\"\"\nFilter the aligned and cleaned ortholog matrices by number of taxa and characters\nWrite out name of matrices that passed the filter\nAlso write out supermatrix stats\n\"\"\"\nfrom seq import read_fasta_file\nfrom tree_utils import get_name\nimport sys,os\n\ndef concatenate(clnDIR,numofsitesFilter,numoftaxaFilter,seqtype,outname):\n	\"\"\"filter cleaned alignments and concatenate\"\"\"\n	if clnDIR[-1] != \"/\": clnDIR += \"/\"\n	sites_filter = int(numofsitesFilter)\n	taxa_filter = int(numoftaxaFilter)\n	assert seqtype == \"aa\" or seqtype == \"dna\",\"Input data type: dna or aa\"\n	model = \"AUTO\"  if seqtype == \"aa\" else \"DNA\"\n	\n	print \"Filtering ortholog matrixes\"\n	selected = [] # list of alignment file names that pass the filters\n	for i in os.listdir(clnDIR):\n		if i.endswith(\".aln-cln\"):\n			seqlist = read_fasta_file(clnDIR+i)\n			num_seq = len(seqlist)\n			num_col = len(seqlist[0].seq)\n			if num_seq >= taxa_filter and num_col >= sites_filter:\n				selected.append(i)\n	print len(selected),\"matrices passed the filter\"\n\n	print \"Getting matrix occupancy stats\"\n	taxon_occupancy = {}\n	#key is taxon name, value is [times present in a matrix,total length for this taxon]\n	total_aligned_len = 0 #record how long the final concatenated matrix is\n	if seqtype == \"aa\":\n		cmd = \"phyutility -concat -aa -out \"+outname+\".nex -in \"\n	else: cmd = \"phyutility -concat -out \"+outname+\".nex -in \"\n	for i in selected:\n		cmd += clnDIR+i+\" \"\n		seqlist = read_fasta_file(clnDIR+i)\n		total_aligned_len += len(seqlist[0].seq)\n		for s in seqlist:\n			taxonid = get_name(s.name)\n			if taxonid not in taxon_occupancy:\n				taxon_occupancy[taxonid] = [0,0]\n			taxon_occupancy[taxonid][0] += 1\n			taxon_occupancy[taxonid][1] += len((s.seq.replace(\"-\",\"\")).replace(\"?\",\"\"))\n	cmd += \"\\n\"\n	\n	total_ortho = len(selected)\n	with open(outname+\"_taxon_occupancy_stats\",\"w\") as outfile:\n		outfile.write(\"taxon\\t#orthologs\\t#total_charactors\\tperc_orthologs\\tperc_charactors\\n\")\n		sum_char = 0\n		for taxon in taxon_occupancy:\n			times,chars = taxon_occupancy[taxon][0],taxon_occupancy[taxon][1]\n			sum_char += chars\n			out = taxon+\"\\t\"+str(times)+\"\\t\"+str(chars)+\"\\t\"\n			out += str(times/float(total_ortho))+\"\\t\"+str(chars/float(total_aligned_len))+\"\\n\"\n			outfile.write(out)\n		total_taxa = len(taxon_occupancy)\n		out = \"\\nSupermatrix dimension \"+str(total_taxa)+\" taxa, \"\n		out += str(total_ortho)+\" loci and \"+str(total_aligned_len)+\" aligned columns\\n\"\n		out += \"Overall matrix occupancy \"+str(sum_char/float(total_taxa*total_aligned_len))+\"\\n\"\n		outfile.write(out)\n\n	print \"Supermatrix taxon occupancy stats written to\",outname+\"_taxon_occupancy_stats\"\n	print \"Waiting for concatenation to finish. This may take several minutes...\"\n	with open(outname+\".temp.sh\",\"w\") as f: f.write(cmd)\n	os.system(cmd)\n	\n	#convert the .nex file to .fasta and .model files for raxml\n	infile = open(outname+\".nex\",\"r\")\n	outfile = open(outname+\".phy\",\"w\")\n	for line in infile:	\n		line = line.strip()\n		if len(line) < 10: continue\n		if line[0]==\"#\" or line[:5]==\"BEGIN\" or line[:6]==\"MATRIX\" or line==\"END;\" or line[:6]==\"FORMAT\":\n			continue\n		if line[0] == \"[\":\n			line = line.replace(\"[\",model+\",\")\n			line = line.replace(\" ]\",\"\")\n			line = line.replace(\" cluster\",\"\\n\"+model+\",cluster\")\n			#line = line.replace(\" homolog\",\"\\n\"+model+\",homolog\")\n			line = line.replace(\" \",\"=\")\n			with open(outname+\".model\",\"w\") as outfile2:\n				outfile2.write(line.strip()+\"\\n\")\n				#make sure that wc -l will get how many partitions\n		elif line[:10]==\"DIMENSIONS\":\n			ntax = (line.split(\"NTAX=\")[1]).split(\" \")[0]\n			nchar = (line.split(\"NCHAR=\")[1]).replace(\";\",\"\")\n			outfile.write(ntax+\" \"+nchar+\"\\n\")\n		else:\n			spls=line.split(\"\\t\")\n			outfile.write(spls[0]+\" \"+spls[1]+\"\\n\")\n	infile.close()\n	outfile.close()\n	assert os.path.exists(outname+\".phy\"), \"error concatenate\"\n	os.system(\"rm \"+outname+\".temp.sh\")\n	print \"outfiles written\",outname+\".phy\",outname+\".model\"\n	os.system(\"rm \"+outname+\".nex\") #remove intermediate .nex file\n\nif __name__ == \"__main__\":\n	if len(sys.argv) != 6:\n		print \"usage: python concatenate_matrices.py aln-clnDIR numofsitesFilter numoftaxaFilter dna/aa outname\"\n		sys.exit()\n		\n	clnDIR,numofsitesFilter,numoftaxaFilter,seqtype,outname = sys.argv[1:]\n	concatenate(clnDIR,numofsitesFilter,numoftaxaFilter,seqtype,outname)\n",
+			"file": "/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/concatenate_matrices.py",
+			"file_size": 4264,
+			"file_write_time": 131419057900000000,
 			"settings":
 			{
-				"buffer_size": 1140126,
+				"buffer_size": 4265,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.main.small.snake",
+			"contents": ">Mac001a_2224_20170720\n\n>Mac065_2585_20170720\n\n>Mac098_3072_20170720\n",
+			"file": "/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/EOG091G0AGM_noE.fa.mafft.aln-gb",
+			"file_size": 69,
+			"file_write_time": 131470938070000000,
 			"settings":
 			{
-				"buffer_size": 15196,
+				"buffer_size": 69,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "aboutme.md",
+			"file": "/media/Shared/Dropbox/Media/wooden_leg/Boxing.2017.08.27.Floyd.Mayweather.Jr.vs.Conor.McGregor.PPV.720p.HDTV.x264-VERUM[rarbg]/RARBG.txt",
 			"settings":
 			{
-				"buffer_size": 2221,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Documents/Notebooks/techniques/github.io.txt",
-			"settings":
-			{
-				"buffer_size": 1846,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "",
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.soap.snake",
-			"settings":
-			{
-				"buffer_size": 16251,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "velveth velvet 31 -longPaired -separate -fastq.gz   data/Macmini1_R1.fq.gz data/Macmini1_R2.fq.gz\n\n velvetg velvet_31 -read_trkg yes\n",
-			"settings":
-			{
-				"buffer_size": 133,
-				"line_ending": "Unix",
-				"name": "velveth velvet 31 -longPaired -separate -fastq.gz"
-			}
-		},
-		{
-			"contents": "## Phylogenetic dependence ##\n\nSince I am studying the evolution of sexual tratis, it is crucial to have a good estimate of the phylogeny. This is because the morphology different species is not statistically independent but dependent through a common evolutionary history. We would for example assume that closely related species also tend to look similar. If we want to test for correlations between traits we need to take this dependence into account and we can do that by correcting our test for phylogeny. \n\n## RNAseq ##\n\nWe are infering phylogenies using RNA sequencing. In this method we exctract the enierty of RNA present in a whole animal and sequence it using next generation sequencing. This then gives us access to all the genes that are currently being transcribed in this specimen. After sequencing the RNA needs to be put together into transcriptomes - that is the set of all expressed transcripts. I am currently working on a bioinformatics pipeline to do this. Here is a drawing of the pipeline when it is given two batches of sequences.\n\n![alt text](https://jeremias-brand.github.io/img/macpipe_trans_concept.png \"directed acyclic graph of the transcriptome assembly pipeline\")",
-			"settings":
-			{
-				"buffer_size": 1196,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/config.dev.yaml",
-			"settings":
-			{
-				"buffer_size": 1402,
+				"buffer_size": 30,
 				"line_ending": "Unix"
 			}
 		}
@@ -206,16 +109,48 @@
 				"Set Syntax: Python"
 			],
 			[
+				":w",
+				":w - Save"
+			],
+			[
+				"synt py",
+				"Set Syntax: Python"
+			],
+			[
+				":w ",
+				":w - Save"
+			],
+			[
+				"syn py",
+				"Set Syntax: Python"
+			],
+			[
+				"ana",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"l",
+				"SublimeLinter: Toggle Linter"
+			],
+			[
+				"wra",
+				"Word Wrap: Toggle"
+			],
+			[
+				"linter",
+				"SublimeLinter: Enable Linter"
+			],
+			[
+				"lin ana",
+				"SublimeLinter: Make Warnings Passive"
+			],
+			[
 				"ana lin",
 				"Anaconda: Disable linting on this file"
 			],
 			[
 				"wo",
 				"Word Wrap: Toggle"
-			],
-			[
-				":w",
-				":w - Save"
 			],
 			[
 				"disab",
@@ -312,17 +247,108 @@
 	"expanded_folders":
 	[
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_includes",
 		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans"
 	],
 	"file_history":
 	[
-		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/barebones.html",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_mafft_gb.fa",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_0803_prank_01phtmodel",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_0803_mafft_gb.model",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_0803_mafft_gb.phy",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_0803_mafft_gb.nex",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_0803_prank_01pht.phy",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/macpipe-08-04/summary/short_summary_Mac001a_2224_20170720.busco.txt",
+		"/media/Shared/Dropbox/shared_work/Phylogenomics/Trans 3/Trans_3_conc.txt",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/AA3925.sh",
+		"/media/Shared/Dropbox/Documents/PhD/Analysis/Progress_reports/Summary_injecting_SA_y_noE_ok",
+		"/media/Shared/Dropbox/Documents/PhD/Analysis/Progress_reports/injecting_sp.txt",
+		"/home/jeremias/soft/INSTALL",
+		"/media/Shared/Dropbox/Documents/PhD/Analysis/Progress_reports/injecting_sp_q.txt",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/macpipe.matrix.tree.snake",
+		"/run/user/1000/gvfs/sftp:host=login20.scicore.unibas.ch,user=brajer00/scicore/home/schaere/brajer00/analyses/P521/AA2900.sh",
+		"/run/user/1000/gvfs/sftp:host=login20.scicore.unibas.ch,user=brajer00/scicore/home/schaere/brajer00/analyses/P521/AA200.sh",
+		"/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/tutorials/part3_homology_orthology.md",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/parallel_aln.py",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.snake",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/parallel_raxml.py",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/rerunraxml.txt",
+		"/media/Shared/Dropbox/Bioinformatics/Bio_Server/commands.txt",
+		"/media/Shared/Dropbox/Bioinformatics/Bio_Server/Website_and_Server_access.txt",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/run_Mac003_3326_20170720.cds.fa/single_copy_busco_sequences/EOG091G0AFP.faa",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/run_Mac003_3326_20170720.cds.fa/single_copy_busco_sequences/EOG091G0A79.fna",
+		"/home/jeremias/.cache/.fr-jrcHEi/R-3.4.1/INSTALL",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_supermatrix_pht01_50_60_partition.model",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/raxml_cluster.sh",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/split_db.py",
+		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-08-04/macpipe.trans.snake",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/collected/EOG091G08JE.fa.mafft.aln",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/collected/EOG091G08JE.fa.mafft.aln.pht",
+		"/run/user/1000/gvfs/sftp",
+		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-07-20/macpipe.matrix.snake",
+		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-07-20/clusters70/RAxML_parsimonyTree.cluster706.fa.mafft.aln.pht.cln",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/rerunmafft.txt",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/rerunpht.txt",
+		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-07-20/clusters70/RAxML_result.cluster789.fa.mafft.aln.pht.cln",
+		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/prep_other_assemblies/mcl_blast_bku/names.txt",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/macpipe.matrix.snake",
+		"/home/jeremias/Desktop/rename_P521.txt",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/names.txt",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/jere_utils.py",
+		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-07-20/transdecoder/Mac035_2048_20170720.pep.fa",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/translated_proteins/Mac001a_2224_20170720_DN3114_c1_g1_i1.faa",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/translated_proteins/Mac001a_2224_20170720_DN128_c0_g2_i1.faa",
+		"/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/phyutility_wrapper.py",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/full_table_Mac001a_2224_20170720.busco.tsv",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/translated_proteins/Mac001a_2224_20170720_DN15428_c0_g1_i1.faa",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/hmmer_output/EOG09370ARO.out.1",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/hmmer_output/EOG09370AS9.out.2",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/translated_proteins/Mac001a_2224_20170720_DN745_c1_g1_i1.faa",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/translated_proteins/Mac001a_2224_20170720_DN16368_c0_g1_i1.faa",
+		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-07-20/busco/run_Mac001a_2224_20170720.busco/hmmer_output/EOG09370A22.out.1",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/short_summary_Mac001a_2224_20170720.busco.txt",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/RAxML_result.5.fa.mafft.aln",
+		"/media/Shared/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/all-by-all_blastp.py",
+		"/media/Shared/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/blast_to_mcl.py",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/All_by_All_submit.sh",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/align.log",
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_config.yml",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/morphometry.md",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/parrallel.sh",
+		"/media/Shared/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/jackknife_by_percent_genes.py",
+		"/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/fasta_to_tree.py",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/mcl.sh",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/aln_cmd.sh",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/pht_cmd.sh",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/6.fa",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/5.fa",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/raxml_cmd.sh",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/aln_cmd.sh",
+		"/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/pasta_wrapper.py",
+		"/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/mafft_wrapper.py",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/cat_rawblast_prepmcl.sh",
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/phy.md",
+		"/media/Shared/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/tutorials/part3_homology_orthology.md",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/hit-frac0.4_I1.4_e5",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/Macrostomum_clavituba_DACH_20161123.fasta",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/index.html",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/em.md",
+		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/slide-backgrounds.html",
+		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/simple.md",
+		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/embedded-media.html",
+		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/slides-dd.html",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.soap.snake",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.main.small.snake",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/aboutme.md",
+		"/media/Shared/Dropbox/Documents/Notebooks/techniques/github.io.txt",
+		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/config.dev.yaml",
+		"/media/Shared/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/examples/homology_inference/in_out",
+		"/media/Shared/Dropbox/Documents/Notebooks/Codebooks/main.txt",
+		"/media/Shared/Dropbox/Documents/Books/Biology/Diversity of Fishes",
+		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/barebones.html",
 		"/home/jeremias/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
 		"/home/jeremias/.config/sublime-text-3/Packages/User/Anaconda.sublime-settings",
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/img/MTP_2713_sv_stylet_crop.png",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/em.md",
 		"/media/Shared/Dropbox/Media/Egypt_2015/Egypt15_images_video/GOPR0331.JPG",
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/img/Macrostomum_diversity_V2.png",
 		"/media/Shared/Dropbox/Bioinformatics/dev/pull_seq_from_transcriptome/fish_genes.py",
@@ -353,76 +379,11 @@
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_posts/2015-01-04-first-post.md",
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_posts/2015-01-15-pirates.md",
 		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/delim/spdead.bpp.txt",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/28S_2017/275 documents from Macrostomidae.fasta",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/28S_2017/dd.fasta",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/28S_2017/commands.txt",
-		"/media/Shared/Dropbox/Bioinformatics/Scripts/Python/hackerrank/30_day_of_code/05-strings.py",
-		"/media/Shared/Dropbox/Bioinformatics/Scripts/dotfiles/alcedo-2017-05-29/.vimrc",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/minimal.html",
-		"/media/Shared/Dropbox/Bioinformatics/GIT/somefile2.py",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/BPP/ChenLi2001.bpp.ctl",
-		"/home/jeremias/soft/bpp3.3a/examples/ChenLi2001.Imap.txt",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/BPP/yu2001.txt",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/come_2017/02_cpp/functions.hpp",
-		"/home/jeremias/soft/BEASTv1.8.4/README.txt",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/BPP/yu2001.bpp.ctl",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/come_2017/02_cpp/CMakeLists.txt",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/STARBEAST/phryno_bpp.txt",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/STARBEAST/methods.txt",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/come_2017/02_cpp/playground.cpp",
-		"/home/jeremias/soft/bpp3.3a/src/README.txt",
-		"/home/jeremias/soft/bpp3.3a/examples/ChenLi2001.txt",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/brown.GTRG.out",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/brown.GTRG_adeq.out",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/MCbase.dat",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/codeml.ctl",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/data/lysozyme/codeml.ctl",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/baseml.ctl",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/data/adh/M8.1/codeml.ctl",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/data/adh/M8/codeml.ctl",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/data/adh/codeml.ctl",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/data/lysozyme/lysozymeLarge_col_hom.trees",
-		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Brain_Moore.txt",
-		"/home/jeremias/Desktop/HIV_renamed.fasta",
-		"/home/jeremias/Notebooks/Techniques/R_plotting.txt",
-		"/home/jeremias/Desktop/HIV_dentist_renamed.fasta",
-		"/home/jeremias/Desktop/sequence.fasta",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/HIV_dentist/HIV_dentist.fasta",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/HIV_dentist/HIV_align",
-		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/mrbayes/1-Exercise/conifer_dna.nex",
-		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Bastien_Rousseau.txt",
-		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Jeff_Thorne.txt",
-		"/home/jeremias/Desktop/cisco.log",
-		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Steve_Smith.txt",
-		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Bastien_Rousseau/Branch_and_Bound.txt",
-		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Bastien_Rousseau/Distance_Methods.txt",
-		"/home/jeremias/Documents/practicalcomputing/pcfb/examples/FEC00001_1.seq",
-		"/home/jeremias/Documents/practicalcomputing/pcfb/examples/LatLon.txt",
-		"/home/jeremias/Dropbox/Bioinformatics/Scripts/Python/transect_timer_batch10.py",
-		"/home/jeremias/Dropbox/Bioinformatics/Scripts/Python/python_scripting_comands.md",
-		"/home/jeremias/Dropbox/Documents/Courses/Programming_life_science/Git-Workshop/SIB-Days-2016/examples/git-init.sh",
-		"/home/jeremias/Documents/Python/Shell_test.py",
-		"/home/jeremias/Documents/practicalcomputing/pcfb/examples/Ch3observations.txt",
-		"/home/jeremias/Dropbox/Documents/Courses/Molecular_Computational_Evolution/Notes.md",
-		"/home/jeremias/bioinformatics/fasta_header_renamer._joiner.sh",
-		"/media/jeremias/94B0CFE7B0CFCDC4/Dokumente und Einstellungen/jerem/OneDrive/Programs/Bio_Server/Codebook for Transcriptome assembly.markdown",
-		"/home/jeremias/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
-		"/media/jeremias/94B0CFE7B0CFCDC4/Dokumente und Einstellungen/jerem/OneDrive/Programs/Bio_Server/# Codebook for Transcriptome assembly #",
-		"/media/jeremias/94B0CFE7B0CFCDC4/Dokumente und Einstellungen/jerem/OneDrive/Programs/Bio_Server/commands.txt",
-		"/home/jeremias/Documents/Genomic16/lectures/lab/ggplot2 excercise",
-		"/home/jeremias/Documents/install_essentials.sh",
-		"/home/jeremias/Desktop/EHV-Emiliania_huxleyi/84_3.fasta",
-		"/home/jeremias/Desktop/EHV-Emiliania_huxleyi/Huxley_multi_whole_1.fasta",
-		"/home/jeremias/Desktop/EHV-Emiliania_huxleyi/Huxley_multi.fasta",
-		"/home/jeremias/Downloads/vpnsetup64.sh",
-		"/home/jeremias/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
-		"/home/jeremias/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
-		"/home/jeremias/Desktop/EHV-Emiliania_huxleyi/84_1.fasta",
-		"/home/jeremias/Desktop/EHV-Emiliania_huxleyi/Huxley_multi_whole_1.dnd"
+		"/media/Shared/Dropbox/Bioinformatics/Reports/28S_2017/275 documents from Macrostomidae.fasta"
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -436,6 +397,16 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"(gene[0-9]+=.+?)=",
+			"3400",
+			"3200",
+			"3000",
+			"2900",
+			"D128",
+			"clusters",
+			"elif",
+			"prin",
+			"test",
 			"bigim",
 			"imgfbigim",
 			"Macrostomum",
@@ -510,9 +481,14 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
+			"\\1\\n",
+			"3606",
+			"3400",
+			"3200",
+			"3000",
 			"*Macrostomum*",
 			">\\1",
 			"\\1",
@@ -548,76 +524,44 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "morphometry.md",
+					"file": "/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/tutorials/part3_homology_orthology.md",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1171,
+						"buffer_size": 10447,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								98,
-								98
+								4211,
+								4211
 							]
 						],
 						"settings":
 						{
-							"history_list_is_closing": true,
-							"spell_check": true,
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1512.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "_config.yml",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5596,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1198,
-								1198
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/YAML/YAML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2016,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
@@ -630,93 +574,7 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 285.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 17,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "em.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4199,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								161,
-								161
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/media/Shared/Dropbox/Bioinformatics/Bio_Server/Website_and_Server_access.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 341,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								341,
-								341
-							]
-						],
-						"settings":
-						{
 							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "phy.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1256,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								52,
-								52
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -726,125 +584,69 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 2,
+					"file": "/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/concatenate_matrices.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1276,
+						"buffer_size": 4265,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								953,
-								953
+								4124,
+								4124
 							]
 						],
 						"settings":
 						{
-							"auto_name": "ILLUMINACLIP:TruSeq3",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 16,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/slide-backgrounds.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4083,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"syntax": "Packages/Python/Python.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2413.0,
+						"translation.y": 2212.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/simple.md",
+					"buffer": 3,
+					"file": "/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/EOG091G0AGM_noE.fa.mafft.aln-gb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 64,
+						"buffer_size": 69,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								51,
-								51
+								69,
+								69
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/embedded-media.html",
+					"buffer": 4,
+					"file": "/media/Shared/Dropbox/Media/wooden_leg/Boxing.2017.08.27.Floyd.Mayweather.Jr.vs.Conor.McGregor.PPV.720p.HDTV.x264-VERUM[rarbg]/RARBG.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1365,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1061,
-								1061
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 83.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
+						"buffer_size": 30,
 						"regions":
 						{
 						},
@@ -857,302 +659,13 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/slides-dd.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1140126,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								161876,
-								161876
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 53182.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.main.small.snake",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 15196,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3234,
-								3234
-							]
-						],
-						"settings":
-						{
-							"auto_complete_triggers":
-							[
-								{
-									"characters": ".",
-									"selector": "source.python - string - comment - constant.numeric"
-								},
-								{
-									"characters": ".",
-									"selector": "source.python - string - constant.numeric"
-								}
-							],
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1995.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "aboutme.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2221,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								35,
-								35
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 18,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "/media/Shared/Dropbox/Documents/Notebooks/techniques/github.io.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1846,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								924,
-								924
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 741.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 19,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 3,
-			"sheets":
-			[
-				{
-					"buffer": 15,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"auto_name": "",
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 16,
-					"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.soap.snake",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 16251,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3550,
-								3550
-							]
-						],
-						"settings":
-						{
-							"auto_complete_triggers":
-							[
-								{
-									"characters": ".",
-									"selector": "source.python - string - comment - constant.numeric"
-								},
-								{
-									"characters": ".",
-									"selector": "source.python - string - constant.numeric"
-								},
-								{
-									"characters": ".",
-									"selector": "source.python - string - constant.numeric"
-								}
-							],
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2166.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 17,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 133,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								133,
-								133
-							]
-						],
-						"settings":
-						{
-							"auto_name": "velveth velvet 31 -longPaired -separate -fastq.gz",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 18,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1196,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								510,
-								510
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 19,
-					"file": "/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/config.dev.yaml",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1402,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								653,
-								653
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/YAML/YAML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1160,7 +673,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 35.0
+		"height": 26.0
 	},
 	"input":
 	{
@@ -1175,18 +688,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.48604401503,
 			1.0
 		],
 		"rows":
@@ -1208,7 +714,7 @@
 	"project": "github.io.sublime-project",
 	"replace":
 	{
-		"height": 64.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1277,7 +783,7 @@
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 241.0,
 	"status_bar_visible": true,
 	"template_settings":
