@@ -4,51 +4,150 @@
 		"selected_items":
 		[
 			[
-				"past",
-				"pasta_aln	statement"
-			],
-			[
-				"maff",
-				"mafft_aln	statement"
-			],
-			[
-				"cores",
-				"cores_per_job	param"
-			],
-			[
-				"run",
-				"run_up_to_blast"
-			],
-			[
-				"chun",
-				"chunk_id	statement"
-			],
-			[
-				"rev",
-				"reverse_trimmed	statement"
-			],
-			[
-				"forward",
-				"forward_trimmed	statement"
-			],
-			[
 				"pa",
-				"path	module"
+				"path\tmodule"
 			],
 			[
 				"nu",
-				"numpy	module"
+				"numpy\tmodule"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/tutorials/part3_homology_orthology.md",
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.soap.snake",
+			"settings":
+			{
+				"buffer_size": 16408,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "# collection of code snippets used for the prallel blast from agalma\n\n@pipe.stage\ndef prepare_blast(blast_dir, fasta, seq_type, genesets):\n    \"\"\"Prepare all-by-all BLAST database and command list\"\"\"\n\n    db = os.path.join(blast_dir, \"db\")\n\n    if genesets:\n        if seq_type == \"aa\":\n            program = \"blastp\"\n        else:\n            program = \"blastx\"\n        for geneset in genesets:\n            utils.cat_to_file(geneset, db+\".fa\")\n            # Also add genesets to the query file, to find overlapping genes\n            # between sets.\n            utils.cat_to_file(geneset, fasta)\n        wrappers.MakeBlastDB(db+\".fa\", db, \"prot\")\n    else:\n        if seq_type == \"aa\":\n            dbtype = \"prot\"\n            program = \"blastp\"\n        elif seq_type == \"nt\" or seq_type == \"cds\":\n            dbtype = \"nucl\"\n            program = \"tblastx\"\n        else:\n            utils.die(\"unrecognized sequence type:\", seq_type)\n        wrappers.MakeBlastDB(fasta, db, dbtype)\n\n    command = program + \" -db db -evalue 1e-20\" \\\n                      + \" -outfmt \\\"6 qseqid sseqid bitscore qlen length\\\"\"\n#\n#   blastp -db db -evalue 1e-20 -outfmt '6 qseqid sseqid bitscore qlen length'\n#\n    commands = workflows.blast.split_query(fasta, command, 100000, blast_dir)\n\n    ingest(\"commands\")\n\n# with aa as input t\n\ndef split_query(fasta, command, chunk_size=10000, workdir=''):\n    \"\"\"\n    Break a query file into chunks of roughly `chunk_size` nucleotides\n    and return a path to a text file with `command` applied to each\n    query fragment.\n    \"\"\"\n\n    workdir = os.path.abspath(workdir)\n    utils.safe_mkdir(workdir)\n\n    commands = os.path.join(workdir, 'commands.sh')\n    chunk_id = 0\n    chunk_file = None\n\n    nbases = 0\n\n    with open(commands, 'w') as f:\n        for record in SeqIO.parse(open(fasta), 'fasta'):\n            nbases += len(record.seq)\n            if nbases > (chunk_id * chunk_size):\n                chunk_id = nbases / chunk_size + 1\n                chunk_file = open(\n                                os.path.join(workdir, '%d.fa' % chunk_id),\n                                'w')\n                print >>f, command, '-query', '%d.fa' % chunk_id\n            SeqIO.write(record, chunk_file, 'fasta')\n\n    return commands\n\n\n@pipe.stage\ndef run_blast(blast_dir, commands):\n    \"\"\"Run all-by-all BLAST\"\"\"\n    blast_hits = os.path.join(blast_dir, \"hits.tab\")\n    wrappers.Parallel(\n        commands, \"--joblog blast.log --resume-failed --halt 1\",\n        stdout=blast_hits, cwd=blast_dir)\n    ingest(\"blast_hits\")\n\n\nclass Parallel (BaseWrapper):\n    \"\"\"\n    GNU parallel utility\n    http://www.gnu.org/software/parallel/\n    \"\"\"\n\n    def __init__(self, commands, *args, **kwargs):\n        self.init('parallel', **kwargs)\n        self.version('--version')\n        self.args += ('--gnu', '-a', commands)\n        if 'threads' in kwargs:\n            self.args += ('-j', kwargs['threads'])\n        hostlist = config.get_resource_default('hostlist', None)\n        if hostlist:\n            self.args += ('-S', hostlist)\n            if self.cwd:\n                self.args += ('--wd', self.cwd)\n            else:\n                self.args += ('--wd', os.getcwd())\n        self.args += args\n        self.run()\n",
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/parallel_blast_snippets.py",
+			"file_size": 1004,
+			"file_write_time": 131451346611880979,
+			"settings":
+			{
+				"buffer_size": 3225,
+				"line_ending": "Unix",
+				"name": "# collection of code snippets used for the prallel"
+			}
+		},
+		{
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/macpipe.matrix.tree.snake",
+			"settings":
+			{
+				"buffer_size": 5062,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "fastq-mcf -o >(gzip -c >ERR138445_1.mcf.fastq.gz) -o >(gzip -c >ERR138445_2.mcf.fastq.gz) -l 50 -q 20 --qual-mean 20 -R adapters.fa \\\n ERR138445_1.fastq.gz ERR138445_2.fastq.gz &>ERR138445.mcf.err\n\n\nfastq-mcf -o >(gzip -c >ERR138446_1.mcf.fastq.gz) -o >(gzip -c >ERR138446_2.mcf.fastq.gz) -l 50 -q 20 --qual-mean 20 -R adapters.fa \\\n  ERR138446_1.fastq.gz ERR138446_2.fastq.gz &>ERR138446.mcf.err",
+			"settings":
+			{
+				"buffer_size": 396,
+				"line_ending": "Unix",
+				"name": "fastq-mcf -o >(gzip -c >ERR138445_1.mcf.fastq.gz)"
+			}
+		},
+		{
+			"contents": "#!/bin/bash          \n#SBATCH --job-name=all_by_all \n#SBATCH --time=7-0:00:00\n#SBATCH --qos=1week\n#SBATCH --ntasks=30\n#SBATCH --cpus-per-task=1\n#SBATCH --mem-per-cpu=1G\n\nmodule purge\nmodule load parallel/20160122\nmodule load BLAST+/2.6.0\n\nsrun=\"srun -n1 -N1 --exclusive\"\n\nparallel=\"parallel -N 1 --delay .2 -j $SLURM_NTASKS --joblog parallel_joblog --resume\"\n\n    \n$parallel \"$srun ./blast_cluster.sh {1}\" ::: {1..6629}\n",
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/Scripts/Python/All_by_All_submit.sh",
+			"file_size": 1528,
+			"file_write_time": 131497905300000000,
+			"settings":
+			{
+				"buffer_size": 420,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/tutorials/part3_homology_orthology.md",
 			"settings":
 			{
 				"buffer_size": 10447,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/write_ortholog_fasta_files.py",
+			"settings":
+			{
+				"buffer_size": 1554,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/parallel_aln_2.py",
+			"settings":
+			{
+				"buffer_size": 12495,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/parallel_raxml.py",
+			"settings":
+			{
+				"buffer_size": 5378,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Hi Ronald,\n\nI'm a PhD Sudent visiting UI for four month. I will arrive in early November and leave mid to late March.\nWould love to rent an apartment during that time but I would also be interested in sharing an apartment.\nWould it be possible to rent your room short term like that? I might be able to bump up the rent a little bit in exchange for the trouble.\n\nWould be great to hear from you,\n\nJeremias ",
+			"settings":
+			{
+				"buffer_size": 406,
+				"line_ending": "Unix",
+				"name": "Hi Ronald,"
+			}
+		},
+		{
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/jere_utils.py",
+			"settings":
+			{
+				"buffer_size": 530,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/blast_to_mcl.py",
+			"settings":
+			{
+				"buffer_size": 4784,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.snake",
+			"settings":
+			{
+				"buffer_size": 19765,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "# -*- coding: utf-8 -*-\n\"\"\"\nCreated on Sat Jul 22 17:51:22 2017\n\n@author: jeremias\n\"\"\"\nimport os,sys\nimport subprocess\nfrom seq import read_fasta_file\n\nimport sys,os\nfrom seq import read_fasta_file\n\ndef phyutility(DIR,alignment,min_col_occup,seqtype,min_chr=10):\n    \"\"\"\n    remove columns with occupancy lower than MIN_COLUMN_OCCUPANCY\n    remove seqs shorter than MIN_CHR after filter columns\n    \"\"\"\n    if DIR[-1] != \"/\": DIR += \"/\"\n    if os.path.exists(DIR+cleaned): return cleaned\n    assert alignment.endswith(\".aln\"),\\\n        \"phyutility infile \"+alignment+\" not ends with .aln\"\n    assert os.stat(DIR+alignment).st_size > 0, DIR+alignment+\"empty\"\n    assert seqtype == \"aa\" or seqtype == \"dna\",\"Input data type: dna or aa\"\n\n    if seqtype == \"aa\":\n        cmd = [\"phyutility\",\"-aa\",\"-clean\",str(min_col_occup),\"-in\",\\\n               DIR+alignment,\"-out\",DIR+alignment+\".pht\"]\n    else:\n        cmd = [\"phyutility\",\"-clean\",str(min_col_occup),\"-in\",\\\n               DIR+alignment,\"-out\",DIR+alignment+\".pht\"]\n    print \" \".join(cmd)\n    return \" \".join(cmd)\n\n\n\n\n\ndef mafft(DIR,fasta,thread,seqtype):\n    if DIR[-1] != \"/\": DIR += \"/\"\n    alignment = fasta+\".mafft.aln\"\n    if os.path.exists(DIR+alignment) and os.stat(DIR+alignment).st_size>0:\n        return alignment\n    assert seqtype == \"aa\" or seqtype == \"dna\",\"Input data type: dna or aa\"\n    seqlist = read_fasta_file(DIR+fasta)\n    seqcount = len(seqlist)\n    maxlen = 0\n    for s in seqlist:\n        maxlen = max(maxlen,len(s.seq))\n    assert seqcount >= 4, \"less than 4 sequences in \"+DIR+fasta\n\n    if seqtype == \"dna\":\n        infasta = DIR+fasta\n        seq = \"--nuc\"\n    else:\n        infasta = DIR+fasta+\".temp\"\n        seq = \"--amino\"\n        with open(infasta,\"w\") as outfile:\n            for s in seqlist:\n                #remove U which is usually not in aa alphabet\n                s.seq = s.seq.replace(\"U\",\"X\")\n                s.seq = s.seq.replace(\"u\",\"x\")\n                #remove stop codon and seq after it\n                if \"*\" in s.seq:\n                    s.seq = s.seq[:s.seq.find(\"*\")]\n                outfile.write(s.get_fasta())\n\n    if seqcount >= 1000 or maxlen >= 10000:\n        alg = [\"--auto\"] #so that the run actually finishes!\n    else: alg = [\"--genafpair\",\"--maxiterate\",\"1000\"]\n\n    cmd = [\"mafft\"]+alg+[seq,\"--thread\",str(thread)]\n    #com += [\"--anysymbol\"] # when there are \"U\"s in aa sequences\n    cmd += [infasta, \">\", alignment]\n    return \" \".join(cmd)\n#    out = open(DIR+alignment, 'w')\n#    p = subprocess.Popen(cmd,stderr=subprocess.PIPE,stdout=out)\n#    out.close()\n#    p.communicate()\n#    assert p.returncode == 0,\"Error mafft\"\n#    if seqtype == \"aa\": os.remove(DIR+fasta+\".temp\")\n#    return alignment\n\n\n\ndef pasta(DIR,fasta,thread,seqtype):\n    if DIR[-1] != \"/\": DIR += \"/\"\n    if DIR == \"./\": DIR = \"\"\n    aln = DIR+fasta+\".pasta.aln\"\n    temp_aln = DIR+\"pastajob.marker001.\"+fasta+\".temp.aln\"\n    fa = DIR+fasta\n    if os.path.exists(aln): return fasta+\".pasta.aln\"\n    if not os.path.exists(temp_aln):\n        assert seqtype == \"aa\" or seqtype == \"dna\",\"Input data type: dna or aa\"\n        seq = \"Protein\" if seqtype == \"aa\" else \"DNA\"\n\n        # pasta does not recognize \"*\" or \"U\"\n        seqcount = 0 #record how many sequences in the fasta file\n        infile = open(fa,\"r\")\n        outfile = open(fa+\".temp\",\"w\")\n        for line in infile:\n            if len(line.strip()) == 0: continue # skip empty lines\n            if line[0] == \">\":\n                seqcount += 1\n                outfile.write(line)\n            else:\n                if seqtype == \"aa\":\n                    #remove U which is usually not in aa alphabet\n                    line = (line.replace(\"U\",\"X\")).replace(\"u\",\"x\")\n                    #remove stop codon and seq after it\n                    if \"*\" in line:\n                        line = line[:line.find(\"*\")]\n                    if line[-1] != \"\\n\": line += \"\\n\"\n                outfile.write(line)\n        infile.close()\n        outfile.close()\n\n        cmd = [\"run_pasta.py\",\"--input=\"+fa+\".temp\",\"--datatype=\"+seq]\n        return \" \".join(cmd)\n#        p = subprocess.Popen(cmd)\n#        err,out = p.communicate()\n#        print err,out\n#        assert p.returncode == 0 and os.path.exists(temp_aln),\"Error pasta\"\n#\n#    #remove intermediate files\n#    os.remove(fa+\".temp\")\n#    os.rename(temp_aln,aln)\n#    os.system(\"rm \"+DIR+\"pastajob*\")\n#    return fasta+\".pasta.aln\"\n\ndef get_fasta_size(fasta):\n    \"\"\"\n    given a fasta file\n    output the number of seqs and the length of the longest seq\n    \"\"\"\n    longest = 0\n    seqlist = read_fasta_file(fasta)\n    for s in seqlist:\n        longest = max(longest,len(s.seq.replace(\"-\",\"\")))\n    return len(seqlist),longest\n\n\ndef print_aln_cmd(DIR,fasta,num_cores,seqtype,num_seq_cutoff=1000):\n    \"\"\"\n    given a fasta file\n\n    align, trim alignment and build a tree\n    choose appropriate tools depending on size of the fasta file\n    \"\"\"\n    if DIR[-1] != \"/\": DIR += \"/\"\n    seqcount, maxlen = get_fasta_size(DIR+fasta)\n    num_seq_cutoff = int(num_seq_cutoff)\n    assert seqcount >= 4, \"Less than four sequences in \"+DIR+fasta\n    print(fasta,seqcount,\"sequences\")\n    if seqcount >= num_seq_cutoff: # large cluster\n        cmd = pasta(DIR,fasta,num_cores,seqtype)\n    else: # small cluster\n        cmd = mafft(DIR,fasta,num_cores,seqtype)\n    return cmd\n\n\ndef main(DIR,num_cores,seqtype):\n    \"\"\"if test, only process clusterID that ends with 0\"\"\"\n    assert seqtype == \"aa\" or seqtype == \"dna\",\\\n        \"Input data type: dna or aa\"\n    if DIR[-1] != \"/\": DIR += \"/\"\n\n    #check for really long sequences or large alignments.\n    #These crashes the alignment program\n    for i in os.listdir(DIR):\n        if i.endswith(\".fa\"):\n            seqcount,maxlen = get_fasta_size(DIR+i)\n            if (maxlen>=10000 and seqtype==\"aa\") or (maxlen>=30000 and seqtype==\"dna\"):\n                print(i,\"has\",seqcount,\"sequences\")\n                print(\"longest sequence has\",maxlen,\"characters\")\n                print(\"Warning: sequence too long. May crash alignment process\")\n                #sys.exit()\n    with open(\"aln_cmd.sh\", \"w\") as alnf:\n        filecount = 0\n        for i in os.listdir(DIR):\n            if not i.endswith(\".fa\"): continue\n            filecount += 1\n            print(print_aln_cmd(DIR=DIR,fasta=i,num_cores=num_cores,seqtype=seqtype,num_seq_cutoff=1000),file=alnf)\n        assert filecount > 0, \"No file end with .fa found in \"+DIR\n\n    #run all the alignments using parallel each alignment only gets one core\n    #also pasta and mafft calls are mixed\n    cmd = [\"parallel\", \"-a\", \"aln_cmd.sh\", \"-j\", num_cores, \"--joblog\", \"align.log\"]\n    print( \" \".join(cmd))\n    subprocess.call(cmd, shell=False)\n\n    # after running this we need to rename the pasta files and clean up\n    cmd = [\"rename\", \"\\'s/.+.marker001.(.+).aln/$1.pasta.aln/\\'\"]\n    subprocess.call(cmd, shell=False)\n    cmd = [\"rm\", \"pastajob*\", \"*.temp\"]\n    subprocess.call(cmd, shell=False)\n\n    # Trimming the alignment with phyutility\n    with open(\"pht_cmd.sh\", \"w\") as phyf:\n        filecount = 0\n        for i in os.listdir(DIR):\n            if i.endswith(\"mafft.aln\"):\n                filecount += 1\n                phyutility(DIR,i,0.1,seqtype)\n            elif: i.endwith(\"pasta.aln\"):\n                filecount += 1\n                phyutility(DIR,i,0.01,seqtype)\n        assert filecount > 0, \"No file end with .aln found in \"+DIR\n    assert os.path.exists(DIR+alignment+\"-pht\"),\"Error phyutility\"\n    # run the commands\n    cmd = [\"parallel\", \"-a\", \"pht_cmd.sh\", \"-j\", num_cores, \"--joblog\", \"pht.log\"]\n    print( \" \".join(cmd))\n    subprocess.call(cmd, shell=False)\n\n    #remove empty and very short seqs\n    for i in os.listdir(DIR):\n        if i.endswith(\".pht\"):\n            with open(DIR+i+\"cln\", \"w\") as f:\n                for s in read_fasta_file(DIR+i, \"w\"):\n                    if len(s.seq.replace(\"-\",\"\")) >= min_chr:\n                        f.write(s.get_fasta())\n            os.remove(DIR+i)\n\n\n#when we have amino acids we need to remove stop codons and\n#replace U (selenocystein) with X (which does not exist in the alphabet)\n# this results in a temp file we should remove at the end\n\n\n\n#for i in os.listdir(DIR):\n#        if i.endswith(\".fa\"):\n#            seqcount,maxlen = get_fasta_size(DIR+i)\n#            if (maxlen>=10000 and seqtype==\"aa\") or (maxlen>=30000 and seqtype==\"dna\"):\n#                print i,\"has\",seqcount,\"sequences\"\n#                print \"longest sequence has\",maxlen,\"characters\"\n#                print \"Warning: sequence too long. May crash alignment process\"\n#                #sys.exit()\n#\n#    filecount = 0\n#    for i in os.listdir(DIR):\n#        if not i.endswith(\".fa\"): continue\n#        if test and (i.split(\".\")[0])[-1] != \"0\": continue\n#        filecount += 1\n#        if bs == \"n\":\n#            fasta_to_tree(DIR=DIR,fasta=i,num_cores=num_cores,seqtype=seqtype)\n#        else: fasta_to_bs_tree(DIR=DIR,fasta=i,num_cores=num_cores,seqtype=seqtype)\n#    assert filecount > 0, \"No file end with .fa found in \"+DIR\n",
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/parallel_aln_test.py",
+			"file_size": 9069,
+			"file_write_time": 131453974421732672,
+			"settings":
+			{
+				"buffer_size": 9069,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/biolite/biolite/wrappers.py",
+			"settings":
+			{
+				"buffer_size": 32389,
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -59,33 +158,45 @@
 			}
 		},
 		{
-			"contents": "\"\"\"\nFilter the aligned and cleaned ortholog matrices by number of taxa and characters\nWrite out name of matrices that passed the filter\nAlso write out supermatrix stats\n\"\"\"\nfrom seq import read_fasta_file\nfrom tree_utils import get_name\nimport sys,os\n\ndef concatenate(clnDIR,numofsitesFilter,numoftaxaFilter,seqtype,outname):\n	\"\"\"filter cleaned alignments and concatenate\"\"\"\n	if clnDIR[-1] != \"/\": clnDIR += \"/\"\n	sites_filter = int(numofsitesFilter)\n	taxa_filter = int(numoftaxaFilter)\n	assert seqtype == \"aa\" or seqtype == \"dna\",\"Input data type: dna or aa\"\n	model = \"AUTO\"  if seqtype == \"aa\" else \"DNA\"\n	\n	print \"Filtering ortholog matrixes\"\n	selected = [] # list of alignment file names that pass the filters\n	for i in os.listdir(clnDIR):\n		if i.endswith(\".aln-cln\"):\n			seqlist = read_fasta_file(clnDIR+i)\n			num_seq = len(seqlist)\n			num_col = len(seqlist[0].seq)\n			if num_seq >= taxa_filter and num_col >= sites_filter:\n				selected.append(i)\n	print len(selected),\"matrices passed the filter\"\n\n	print \"Getting matrix occupancy stats\"\n	taxon_occupancy = {}\n	#key is taxon name, value is [times present in a matrix,total length for this taxon]\n	total_aligned_len = 0 #record how long the final concatenated matrix is\n	if seqtype == \"aa\":\n		cmd = \"phyutility -concat -aa -out \"+outname+\".nex -in \"\n	else: cmd = \"phyutility -concat -out \"+outname+\".nex -in \"\n	for i in selected:\n		cmd += clnDIR+i+\" \"\n		seqlist = read_fasta_file(clnDIR+i)\n		total_aligned_len += len(seqlist[0].seq)\n		for s in seqlist:\n			taxonid = get_name(s.name)\n			if taxonid not in taxon_occupancy:\n				taxon_occupancy[taxonid] = [0,0]\n			taxon_occupancy[taxonid][0] += 1\n			taxon_occupancy[taxonid][1] += len((s.seq.replace(\"-\",\"\")).replace(\"?\",\"\"))\n	cmd += \"\\n\"\n	\n	total_ortho = len(selected)\n	with open(outname+\"_taxon_occupancy_stats\",\"w\") as outfile:\n		outfile.write(\"taxon\\t#orthologs\\t#total_charactors\\tperc_orthologs\\tperc_charactors\\n\")\n		sum_char = 0\n		for taxon in taxon_occupancy:\n			times,chars = taxon_occupancy[taxon][0],taxon_occupancy[taxon][1]\n			sum_char += chars\n			out = taxon+\"\\t\"+str(times)+\"\\t\"+str(chars)+\"\\t\"\n			out += str(times/float(total_ortho))+\"\\t\"+str(chars/float(total_aligned_len))+\"\\n\"\n			outfile.write(out)\n		total_taxa = len(taxon_occupancy)\n		out = \"\\nSupermatrix dimension \"+str(total_taxa)+\" taxa, \"\n		out += str(total_ortho)+\" loci and \"+str(total_aligned_len)+\" aligned columns\\n\"\n		out += \"Overall matrix occupancy \"+str(sum_char/float(total_taxa*total_aligned_len))+\"\\n\"\n		outfile.write(out)\n\n	print \"Supermatrix taxon occupancy stats written to\",outname+\"_taxon_occupancy_stats\"\n	print \"Waiting for concatenation to finish. This may take several minutes...\"\n	with open(outname+\".temp.sh\",\"w\") as f: f.write(cmd)\n	os.system(cmd)\n	\n	#convert the .nex file to .fasta and .model files for raxml\n	infile = open(outname+\".nex\",\"r\")\n	outfile = open(outname+\".phy\",\"w\")\n	for line in infile:	\n		line = line.strip()\n		if len(line) < 10: continue\n		if line[0]==\"#\" or line[:5]==\"BEGIN\" or line[:6]==\"MATRIX\" or line==\"END;\" or line[:6]==\"FORMAT\":\n			continue\n		if line[0] == \"[\":\n			line = line.replace(\"[\",model+\",\")\n			line = line.replace(\" ]\",\"\")\n			line = line.replace(\" cluster\",\"\\n\"+model+\",cluster\")\n			#line = line.replace(\" homolog\",\"\\n\"+model+\",homolog\")\n			line = line.replace(\" \",\"=\")\n			with open(outname+\".model\",\"w\") as outfile2:\n				outfile2.write(line.strip()+\"\\n\")\n				#make sure that wc -l will get how many partitions\n		elif line[:10]==\"DIMENSIONS\":\n			ntax = (line.split(\"NTAX=\")[1]).split(\" \")[0]\n			nchar = (line.split(\"NCHAR=\")[1]).replace(\";\",\"\")\n			outfile.write(ntax+\" \"+nchar+\"\\n\")\n		else:\n			spls=line.split(\"\\t\")\n			outfile.write(spls[0]+\" \"+spls[1]+\"\\n\")\n	infile.close()\n	outfile.close()\n	assert os.path.exists(outname+\".phy\"), \"error concatenate\"\n	os.system(\"rm \"+outname+\".temp.sh\")\n	print \"outfiles written\",outname+\".phy\",outname+\".model\"\n	os.system(\"rm \"+outname+\".nex\") #remove intermediate .nex file\n\nif __name__ == \"__main__\":\n	if len(sys.argv) != 6:\n		print \"usage: python concatenate_matrices.py aln-clnDIR numofsitesFilter numoftaxaFilter dna/aa outname\"\n		sys.exit()\n		\n	clnDIR,numofsitesFilter,numoftaxaFilter,seqtype,outname = sys.argv[1:]\n	concatenate(clnDIR,numofsitesFilter,numoftaxaFilter,seqtype,outname)\n",
-			"file": "/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/concatenate_matrices.py",
-			"file_size": 4264,
-			"file_write_time": 131419057900000000,
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/biolite/biolite/workflows/blast.py",
 			"settings":
 			{
-				"buffer_size": 4265,
-				"line_ending": "Unix"
+				"buffer_size": 6045,
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": ">Mac001a_2224_20170720\n\n>Mac065_2585_20170720\n\n>Mac098_3072_20170720\n",
-			"file": "/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/EOG091G0AGM_noE.fa.mafft.aln-gb",
-			"file_size": 69,
-			"file_write_time": 131470938070000000,
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/agalma/agalma/homologize.py",
 			"settings":
 			{
-				"buffer_size": 69,
-				"line_ending": "Unix"
+				"buffer_size": 8862,
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/media/Shared/Dropbox/Media/wooden_leg/Boxing.2017.08.27.Floyd.Mayweather.Jr.vs.Conor.McGregor.PPV.720p.HDTV.x264-VERUM[rarbg]/RARBG.txt",
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/agalma/dev/mito-validate/mitoMetazoan90_pro/commands.sh",
 			"settings":
 			{
-				"buffer_size": 30,
-				"line_ending": "Unix"
+				"buffer_size": 1836,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/split_db.py",
+			"settings":
+			{
+				"buffer_size": 4476,
+				"line_ending": "Unix",
+				"name": "#!/bin/bash"
+			}
+		},
+		{
+			"contents": "bowtie2 --very-sensitive-local --phred33 -q -x /home/jeremias/dbs/rRNA/SILVA_128_LSURef_tax_silva.fasta -1 /home/jeremias/dev/macpipe_trans/data/Macmini2_R1_cor_trim.fq.gz  -2 /home/jeremias/dev/macpipe_trans/data/Macmini2_R2_cor_trim.fq.gz --threads 14 --met-file bowtie_stats --al-conc-gz /home/jeremias/dev/macpipe_trans/data/Macmini2_rRNA.gz --un-conc-gz /home/jeremias/dev/macpipe_trans/data/Macmini2_clean.gz &> logs/bowtie &&         ' returned non-zero exit status 2\n  File \"/home/jeremias/dev/macpipe_trans/macpipe.trans.snake\", line 147, in __rule_remove_rRNA\n  File \"/home/jeremias/.linuxbrew/var/pyenv/versions/3.5.2/lib/python3.5/concurrent/futures/thread.py\", line 55, in run\n",
+			"settings":
+			{
+				"buffer_size": 690,
+				"line_ending": "Unix",
+				"name": "bowtie2 --very-sensitive-local --phred33 -q -x /ho"
 			}
 		}
 	],
@@ -105,44 +216,20 @@
 				"Anaconda: Disable linting on this file"
 			],
 			[
-				"py",
+				"synta py",
 				"Set Syntax: Python"
 			],
 			[
-				":w",
-				":w - Save"
-			],
-			[
-				"synt py",
-				"Set Syntax: Python"
-			],
-			[
-				":w ",
-				":w - Save"
-			],
-			[
-				"syn py",
-				"Set Syntax: Python"
-			],
-			[
-				"ana",
+				"lin",
 				"Anaconda: Disable linting on this file"
 			],
 			[
-				"l",
-				"SublimeLinter: Toggle Linter"
+				"lint",
+				"Anaconda: Disable linting on this file"
 			],
 			[
-				"wra",
-				"Word Wrap: Toggle"
-			],
-			[
-				"linter",
-				"SublimeLinter: Enable Linter"
-			],
-			[
-				"lin ana",
-				"SublimeLinter: Make Warnings Passive"
+				"pyt",
+				"Set Syntax: Python"
 			],
 			[
 				"ana lin",
@@ -153,12 +240,12 @@
 				"Word Wrap: Toggle"
 			],
 			[
-				"disab",
-				"Anaconda: Disable linting on this file"
+				":w",
+				":w - Save"
 			],
 			[
-				"lin",
-				"SublimeLinter: Toggle Linter"
+				"disab",
+				"Anaconda: Disable linting on this file"
 			],
 			[
 				"set synta py",
@@ -221,7 +308,7 @@
 				"View: Toggle Menu"
 			]
 		],
-		"width": 467.0
+		"width": 400.0
 	},
 	"console":
 	{
@@ -246,115 +333,38 @@
 	},
 	"expanded_folders":
 	[
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_includes",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans"
 	],
 	"file_history":
 	[
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_mafft_gb.fa",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_0803_prank_01phtmodel",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_0803_mafft_gb.model",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_0803_mafft_gb.phy",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_0803_mafft_gb.nex",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_SM_0803_prank_01pht.phy",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/macpipe-08-04/summary/short_summary_Mac001a_2224_20170720.busco.txt",
-		"/media/Shared/Dropbox/shared_work/Phylogenomics/Trans 3/Trans_3_conc.txt",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/AA3925.sh",
-		"/media/Shared/Dropbox/Documents/PhD/Analysis/Progress_reports/Summary_injecting_SA_y_noE_ok",
-		"/media/Shared/Dropbox/Documents/PhD/Analysis/Progress_reports/injecting_sp.txt",
-		"/home/jeremias/soft/INSTALL",
-		"/media/Shared/Dropbox/Documents/PhD/Analysis/Progress_reports/injecting_sp_q.txt",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/macpipe.matrix.tree.snake",
-		"/run/user/1000/gvfs/sftp:host=login20.scicore.unibas.ch,user=brajer00/scicore/home/schaere/brajer00/analyses/P521/AA2900.sh",
-		"/run/user/1000/gvfs/sftp:host=login20.scicore.unibas.ch,user=brajer00/scicore/home/schaere/brajer00/analyses/P521/AA200.sh",
-		"/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/tutorials/part3_homology_orthology.md",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/parallel_aln.py",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.snake",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/parallel_raxml.py",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/rerunraxml.txt",
-		"/media/Shared/Dropbox/Bioinformatics/Bio_Server/commands.txt",
-		"/media/Shared/Dropbox/Bioinformatics/Bio_Server/Website_and_Server_access.txt",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/run_Mac003_3326_20170720.cds.fa/single_copy_busco_sequences/EOG091G0AFP.faa",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/run_Mac003_3326_20170720.cds.fa/single_copy_busco_sequences/EOG091G0A79.fna",
-		"/home/jeremias/.cache/.fr-jrcHEi/R-3.4.1/INSTALL",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/busco_supermatrix_pht01_50_60_partition.model",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/raxml_cluster.sh",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/split_db.py",
-		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-08-04/macpipe.trans.snake",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/collected/EOG091G08JE.fa.mafft.aln",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/collected/EOG091G08JE.fa.mafft.aln.pht",
-		"/run/user/1000/gvfs/sftp",
-		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-07-20/macpipe.matrix.snake",
-		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-07-20/clusters70/RAxML_parsimonyTree.cluster706.fa.mafft.aln.pht.cln",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/rerunmafft.txt",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/rerunpht.txt",
-		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-07-20/clusters70/RAxML_result.cluster789.fa.mafft.aln.pht.cln",
-		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/prep_other_assemblies/mcl_blast_bku/names.txt",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/macpipe.matrix.snake",
-		"/home/jeremias/Desktop/rename_P521.txt",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/names.txt",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/jere_utils.py",
-		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-07-20/transdecoder/Mac035_2048_20170720.pep.fa",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/translated_proteins/Mac001a_2224_20170720_DN3114_c1_g1_i1.faa",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/translated_proteins/Mac001a_2224_20170720_DN128_c0_g2_i1.faa",
-		"/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/phyutility_wrapper.py",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/full_table_Mac001a_2224_20170720.busco.tsv",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/translated_proteins/Mac001a_2224_20170720_DN15428_c0_g1_i1.faa",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/hmmer_output/EOG09370ARO.out.1",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/hmmer_output/EOG09370AS9.out.2",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/translated_proteins/Mac001a_2224_20170720_DN745_c1_g1_i1.faa",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/translated_proteins/Mac001a_2224_20170720_DN16368_c0_g1_i1.faa",
-		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/assembly/P521/macpipe-2017-07-20/busco/run_Mac001a_2224_20170720.busco/hmmer_output/EOG09370A22.out.1",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco/run_Mac001a_2224_20170720.busco/short_summary_Mac001a_2224_20170720.busco.txt",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/RAxML_result.5.fa.mafft.aln",
-		"/media/Shared/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/all-by-all_blastp.py",
-		"/media/Shared/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/blast_to_mcl.py",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/All_by_All_submit.sh",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/align.log",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_config.yml",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/morphometry.md",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/parrallel.sh",
-		"/media/Shared/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/jackknife_by_percent_genes.py",
-		"/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/fasta_to_tree.py",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/mcl.sh",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/aln_cmd.sh",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/pht_cmd.sh",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/6.fa",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/clusters/5.fa",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/raxml_cmd.sh",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/aln_cmd.sh",
-		"/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/pasta_wrapper.py",
-		"/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/mafft_wrapper.py",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/cat_rawblast_prepmcl.sh",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/phy.md",
-		"/media/Shared/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/tutorials/part3_homology_orthology.md",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/hit-frac0.4_I1.4_e5",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_matrix/Macrostomum_clavituba_DACH_20161123.fasta",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/index.html",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/em.md",
-		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/slide-backgrounds.html",
-		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/simple.md",
-		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/embedded-media.html",
-		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/slides-dd.html",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.soap.snake",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.main.small.snake",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/aboutme.md",
+		"/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/Reports/P521/blob/Mspi_blobplot_summary.csv",
+		"/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/biolite/biolite/workflows/transcriptome.py",
+		"/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/tutorials/part3_homology_orthology.md",
+		"/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/tutorials/part2_seq_processing.md",
+		"/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/tutorials/part1_dependencies.md",
+		"/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/tutorials/readme.md",
+		"/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/blast_to_mcl.py",
+		"/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/Reports/2017-07-14-cluster/RAxML_start_tree.txt",
+		"/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.busco.snake",
+		"/D/Bibliothek/Dokumente/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/morphometry.md",
+		"/D/Bibliothek/Dokumente/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/index.html",
+		"/D/Bibliothek/Dokumente/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_config.yml",
+		"/D/Bibliothek/Dokumente/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/aboutme.md",
+		"/D/Bibliothek/Dokumente/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/em.md",
+		"/D/Bibliothek/Dokumente/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/phy.md",
+		"/D/Bibliothek/Dokumente/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_posts/2017-06-21-what-can-we-learn-from-tiny-worms.md",
 		"/media/Shared/Dropbox/Documents/Notebooks/techniques/github.io.txt",
-		"/media/Shared/Dropbox/Bioinformatics/dev/macpipe_trans/config.dev.yaml",
-		"/media/Shared/Dropbox/Bioinformatics/software/phylogenomic_dataset_construction/examples/homology_inference/in_out",
-		"/media/Shared/Dropbox/Documents/Notebooks/Codebooks/main.txt",
-		"/media/Shared/Dropbox/Documents/Books/Biology/Diversity of Fishes",
-		"/media/Shared/Dropbox/Bioinformatics/dev/reveal.js/test/examples/barebones.html",
-		"/home/jeremias/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
 		"/home/jeremias/.config/sublime-text-3/Packages/User/Anaconda.sublime-settings",
+		"/home/jeremias/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/img/MTP_2713_sv_stylet_crop.png",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/em.md",
 		"/media/Shared/Dropbox/Media/Egypt_2015/Egypt15_images_video/GOPR0331.JPG",
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/img/Macrostomum_diversity_V2.png",
 		"/media/Shared/Dropbox/Bioinformatics/dev/pull_seq_from_transcriptome/fish_genes.py",
 		"/media/Shared/Dropbox/Bioinformatics/Reports/macpipe_trans/macpipe.trans.stamp.small.snake",
 		"/media/Shared/Dropbox/Bioinformatics/Reports/macpipe_trans/macpipe.trans.main.small.snake",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/phy.md",
 		"/media/Shared/Dropbox/Bioinformatics/Reports/macpipe_trans/macpipe.trans.timestamp.snake",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_config.yml",
 		"/media/Shared/Dropbox/Bioinformatics/Scripts/Python/hackerrank/30_day_of_code/11-hourglass.py",
 		"/media/Shared/Dropbox/Mendeley/unread/~$Uyeda_et _al_2015.pdf",
 		"/media/Shared/Dropbox/Bioinformatics/Reports/macpipe_trans/macpipe.trans.small.snake_from_server170601",
@@ -379,7 +389,72 @@
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_posts/2015-01-04-first-post.md",
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_posts/2015-01-15-pirates.md",
 		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/delim/spdead.bpp.txt",
-		"/media/Shared/Dropbox/Bioinformatics/Reports/28S_2017/275 documents from Macrostomidae.fasta"
+		"/media/Shared/Dropbox/Bioinformatics/Reports/28S_2017/275 documents from Macrostomidae.fasta",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/28S_2017/dd.fasta",
+		"/media/Shared/Dropbox/Bioinformatics/Reports/28S_2017/commands.txt",
+		"/media/Shared/Dropbox/Bioinformatics/Scripts/Python/hackerrank/30_day_of_code/05-strings.py",
+		"/media/Shared/Dropbox/Bioinformatics/Scripts/dotfiles/alcedo-2017-05-29/.vimrc",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/minimal.html",
+		"/media/Shared/Dropbox/Bioinformatics/GIT/somefile2.py",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/BPP/ChenLi2001.bpp.ctl",
+		"/home/jeremias/soft/bpp3.3a/examples/ChenLi2001.Imap.txt",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/BPP/yu2001.txt",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/come_2017/02_cpp/functions.hpp",
+		"/home/jeremias/soft/BEASTv1.8.4/README.txt",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/BPP/yu2001.bpp.ctl",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/come_2017/02_cpp/CMakeLists.txt",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/STARBEAST/phryno_bpp.txt",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/STARBEAST/methods.txt",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/come_2017/02_cpp/playground.cpp",
+		"/home/jeremias/soft/bpp3.3a/src/README.txt",
+		"/home/jeremias/soft/bpp3.3a/examples/ChenLi2001.txt",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/brown.GTRG.out",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/brown.GTRG_adeq.out",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/MCbase.dat",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/codeml.ctl",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/data/lysozyme/codeml.ctl",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/baseml.ctl",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/data/adh/M8.1/codeml.ctl",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/data/adh/M8/codeml.ctl",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/data/adh/codeml.ctl",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/Hypothesis_testing/positive_selection/data/lysozyme/lysozymeLarge_col_hom.trees",
+		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Brain_Moore.txt",
+		"/home/jeremias/Desktop/HIV_renamed.fasta",
+		"/home/jeremias/Notebooks/Techniques/R_plotting.txt",
+		"/home/jeremias/Desktop/HIV_dentist_renamed.fasta",
+		"/home/jeremias/Desktop/sequence.fasta",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/HIV_dentist/HIV_dentist.fasta",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/HIV_dentist/HIV_align",
+		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/mrbayes/1-Exercise/conifer_dna.nex",
+		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Bastien_Rousseau.txt",
+		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Jeff_Thorne.txt",
+		"/home/jeremias/Desktop/cisco.log",
+		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Steve_Smith.txt",
+		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Bastien_Rousseau/Branch_and_Bound.txt",
+		"/media/Shared/Dropbox/Documents/Notebooks/Courses/Comp_Evo_2017/Bastien_Rousseau/Distance_Methods.txt",
+		"/home/jeremias/Documents/practicalcomputing/pcfb/examples/FEC00001_1.seq",
+		"/home/jeremias/Documents/practicalcomputing/pcfb/examples/LatLon.txt",
+		"/home/jeremias/Dropbox/Bioinformatics/Scripts/Python/transect_timer_batch10.py",
+		"/home/jeremias/Dropbox/Bioinformatics/Scripts/Python/python_scripting_comands.md",
+		"/home/jeremias/Dropbox/Documents/Courses/Programming_life_science/Git-Workshop/SIB-Days-2016/examples/git-init.sh",
+		"/home/jeremias/Documents/Python/Shell_test.py",
+		"/home/jeremias/Documents/practicalcomputing/pcfb/examples/Ch3observations.txt",
+		"/home/jeremias/Dropbox/Documents/Courses/Molecular_Computational_Evolution/Notes.md",
+		"/home/jeremias/bioinformatics/fasta_header_renamer._joiner.sh",
+		"/media/jeremias/94B0CFE7B0CFCDC4/Dokumente und Einstellungen/jerem/OneDrive/Programs/Bio_Server/Codebook for Transcriptome assembly.markdown",
+		"/home/jeremias/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/media/jeremias/94B0CFE7B0CFCDC4/Dokumente und Einstellungen/jerem/OneDrive/Programs/Bio_Server/# Codebook for Transcriptome assembly #",
+		"/media/jeremias/94B0CFE7B0CFCDC4/Dokumente und Einstellungen/jerem/OneDrive/Programs/Bio_Server/commands.txt",
+		"/home/jeremias/Documents/Genomic16/lectures/lab/ggplot2 excercise",
+		"/home/jeremias/Documents/install_essentials.sh",
+		"/home/jeremias/Desktop/EHV-Emiliania_huxleyi/84_3.fasta",
+		"/home/jeremias/Desktop/EHV-Emiliania_huxleyi/Huxley_multi_whole_1.fasta",
+		"/home/jeremias/Desktop/EHV-Emiliania_huxleyi/Huxley_multi.fasta",
+		"/home/jeremias/Downloads/vpnsetup64.sh",
+		"/home/jeremias/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/jeremias/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/jeremias/Desktop/EHV-Emiliania_huxleyi/84_1.fasta",
+		"/home/jeremias/Desktop/EHV-Emiliania_huxleyi/Huxley_multi_whole_1.dnd"
 	],
 	"find":
 	{
@@ -397,18 +472,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"(gene[0-9]+=.+?)=",
-			"3400",
-			"3200",
-			"3000",
-			"2900",
-			"D128",
-			"clusters",
-			"elif",
-			"prin",
-			"test",
-			"bigim",
-			"imgfbigim",
+			"BSSE_2015_12_",
+			"min_chr",
+			"read_fa",
+			"set_up_cores",
+			"paral",
 			"Macrostomum",
 			"E309",
 			"???",
@@ -466,7 +534,7 @@
 			"Cluster",
 			"adaptors",
 			">",
-			"				",
+			"\t\t\t\t",
 			">",
 			"GATTTAAAAATTGCGCTGTTTTTTCCTTCTTTAACATTTTCATCAAACCATGCAGAATAGTGCCCCCTGC",
 			"keys",
@@ -481,14 +549,10 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": true,
+		"regex": false,
 		"replace_history":
 		[
-			"\\1\\n",
-			"3606",
-			"3400",
-			"3200",
-			"3000",
+			"",
 			"*Macrostomum*",
 			">\\1",
 			"\\1",
@@ -524,12 +588,168 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 8,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/tutorials/part3_homology_orthology.md",
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.soap.snake",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16408,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4040,
+								4819
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1760.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 20,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/parallel_blast_snippets.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3225,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2538,
+								2538
+							]
+						],
+						"settings":
+						{
+							"auto_name": "# collection of code snippets used for the prallel",
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 648.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/macpipe.matrix.tree.snake",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5062,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 864.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 396,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								396,
+								199
+							]
+						],
+						"settings":
+						{
+							"auto_name": "fastq-mcf -o >(gzip -c >ERR138445_1.mcf.fastq.gz)",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/Scripts/Python/All_by_All_submit.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 420,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								238,
+								238
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/tutorials/part3_homology_orthology.md",
 					"semi_transient": false,
 					"settings":
 					{
@@ -540,24 +760,327 @@
 						"selection":
 						[
 							[
-								4211,
-								4211
+								7787,
+								7775
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax",
+							"color_scheme": "Packages/MarkdownEditing/MarkdownEditor.tmTheme",
+							"syntax": "Packages/MarkdownEditing/Markdown (Standard).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2046.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/write_ortholog_fasta_files.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1554,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								620,
+								620
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1512.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/parallel_aln_2.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12495,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10604,
+								10604
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4205.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/parallel_raxml.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5378,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1330,
+								1330
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 108.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 406,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								406,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_name": "Hi Ronald,",
+							"default_dir": "D:\\Bibliothek\\Dokumente\\Dropbox\\Documents\\CV-website\\Jeremias-Brand.github.io",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
+					"buffer": 10,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/scripts/jere_utils.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 530,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								530,
+								530
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/blast_to_mcl.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4784,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1191,
+								1202
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.snake",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 19765,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6040,
+								6040
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2979.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/parallel_aln_test.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9069,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6465,
+								6465
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2693.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/biolite/biolite/wrappers.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 32389,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7795,
+								7795
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 13668.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
 					"semi_transient": false,
 					"settings":
 					{
@@ -574,30 +1097,31 @@
 						],
 						"settings":
 						{
+							"default_dir": "D:\\Bibliothek\\Dokumente\\Dropbox\\Documents\\CV-website\\Jeremias-Brand.github.io",
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 19,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "/media/Shared/Dropbox/Bioinformatics/dev/phylogenomic_dataset_construction/concatenate_matrices.py",
+					"buffer": 16,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/biolite/biolite/workflows/blast.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4265,
+						"buffer_size": 6045,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4124,
-								4124
+								1487,
+								1487
 							]
 						],
 						"settings":
@@ -606,66 +1130,138 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2212.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 18,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "/media/Shared/Dropbox/Bioinformatics/Reports/P521/busco-2017-08-03/EOG091G0AGM_noE.fa.mafft.aln-gb",
+					"buffer": 17,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/agalma/agalma/homologize.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 69,
+						"buffer_size": 8862,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								69,
-								69
+								5086,
+								5086
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1944.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/agalma/dev/mito-validate/mitoMetazoan90_pro/commands.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1836,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1836,
+								1836
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 17,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "/media/Shared/Dropbox/Media/wooden_leg/Boxing.2017.08.27.Floyd.Mayweather.Jr.vs.Conor.McGregor.PPV.720p.HDTV.x264-VERUM[rarbg]/RARBG.txt",
+					"buffer": 19,
+					"file": "/D/Bibliothek/Dokumente/Dropbox/Bioinformatics/dev/macpipe_matrix/split_db.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 30,
+						"buffer_size": 4476,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
+								332,
+								332
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"auto_name": "#!/bin/bash",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 20,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 690,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								414,
 								0
 							]
 						],
 						"settings":
 						{
+							"auto_name": "bowtie2 --very-sensitive-local --phred33 -q -x /ho",
+							"default_dir": "D:\\Bibliothek\\Dokumente\\Dropbox\\Documents\\CV-website\\Jeremias-Brand.github.io",
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 15,
 					"type": "text"
 				}
 			]
@@ -673,11 +1269,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 26.0
+		"height": 31.0
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 31.0
 	},
 	"layout":
 	{
@@ -723,14 +1319,6 @@
 		"last_filter": "",
 		"selected_items":
 		[
-			[
-				"confi",
-				"macpipe_trans/config.dev.yaml"
-			],
-			[
-				"mac",
-				"macpipe_trans/macpipe.soap.snake"
-			],
 			[
 				"draf/em",
 				"drafts/em.md"
@@ -784,7 +1372,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": false,
-	"side_bar_width": 241.0,
+	"side_bar_width": 186.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
