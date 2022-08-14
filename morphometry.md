@@ -14,3 +14,9 @@ flatworms are small aquatic animals with a global distribution. They inhabit a v
 Not only body shape varies but also the morphology of the copulatory organs. The stylet (male copulatory organ) also has quite interesting shapes. Note that these images are to scale.
 
 ![image-title-here]({{ site.url }}/img/diversity_stylet.png){:class="img-responsive"}
+
+During my PhD we have collected 145 species and documented their diversity:
+
+![MPE_A]({{ site.url }}/img/MPE_Fig_2A.png){:class="img-responsive"}
+
+![MPE_B]({{ site.url }}/img/MPE_Fig_2B.png){:class="img-responsive"}
