@@ -23,8 +23,9 @@ description: Jeremias Brand's Website
 
 # List of links in the navigation bar
 navbar-links:
-  About Me: "aboutme"
+  Research Interests: "aboutme"
   CV: "http://jeremias-brand.github.io/files/CV_only.pdf"
+  Publications: "publications"
   Research:
     - Morphology: "morphometry"
     - Electron Microscopy: "em"
