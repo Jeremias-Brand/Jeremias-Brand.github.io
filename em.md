@@ -35,7 +35,7 @@ In 3D we see this quite clearly. Here is an example from a species we discovered
 
 {% include youtubePlayer.html id="ZE5gi63MnPU" %}
 
-Together with [Martin Oeggerli] (http://oeggerli.com/) we have made some SEM images of sperm and Martin them arranged an colored them:
+Together with [Martin Oeggerli](http://oeggerli.com/) we have made some SEM images of sperm and Martin them arranged an colored them:
 ![alt text](https://jeremias-brand.github.io/img/20200228-2u4b_vs_4u2b-Sperm-001_025_180rot_finals_MB2.jpg "Sperm of Macrostomum lignano and M. pusillum")
 
 
