@@ -29,7 +29,7 @@ navbar-links:
   Research:
     - Morphology: "morphometry"
     - Electron Microscopy: "em"
-  Rink Department: "https://www.mpinat.mpg.de/rink"
+#  Rink Department: "https://www.mpinat.mpg.de/rink"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
