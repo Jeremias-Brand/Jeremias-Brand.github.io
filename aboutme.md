@@ -1,5 +1,6 @@
 ---
 layout: page
+bigimg: /img/plankton.jpeg
 title: Research Interests
 ---
 
