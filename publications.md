@@ -1,6 +1,6 @@
 ---
 layout: page
-bigimg: /img/books.jpg
+bigimg: /img/books.png
 title: Publications
 ---
 0. [Brand, J. N., L. J. Harmon, and L. Schärer](/papers/brand2022.pdf). 2022. Mating behavior and reproductive morphology predict macroevolution of sex allocation in hermaphroditic flatworms. **BMC Biology** 20:35.
