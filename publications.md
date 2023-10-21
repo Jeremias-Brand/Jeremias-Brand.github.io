@@ -3,7 +3,8 @@ layout: page
 bigimg: /img/books.png	
 title: Publications
 ---
-0. [Brand, J. N](https://frontiersinzoology.biomedcentral.com/articles/10.1186/s12983-023-00509-9#Sec10). 2023. Support for a radiation of free-living flatworms in the African Great Lakes region and the description of five new Macrostomum species. Frontiers in Zoology 20:31.
+0. [Vila-Farré, M., A. Rozanski, M. Ivanković, J. Cleland, J. N. Brand, F. Thalen, M. A. Grohme, S. von Kannen, A. L. Grosbusch, H. T.-K. Vu, C. E. Prieto, F. Carbayo, B. Egger, C. Bleidorn, J. E. J. Rasko, and J. C. Rink](https://www.nature.com/articles/s41559-023-02221-7). 2023. Evolutionary dynamics of whole-body regeneration across planarian flatworms. **Nature Ecology & Evolution**.
+0. [Brand, J. N](https://frontiersinzoology.biomedcentral.com/articles/10.1186/s12983-023-00509-9#Sec10). 2023. Support for a radiation of free-living flatworms in the African Great Lakes region and the description of five new Macrostomum species. **Frontiers in Zoology** 20:31.
 0. [Wiberg, R. A. W., J. N. Brand, G. Viktorin, J. Mitchell, C. Beisel, and L. Schärer](https://doi.org/10.1093/g3journal/jkad149). 2023. Genome assemblies of the simultaneously hermaphroditic flatworms Macrostomum cliftonense and Macrostomum hystrix. **G3 Genes Genomes Genetics** jkad149.
 0. [Brand, J. N., L. J. Harmon, and L. Schärer](/papers/brand2022.pdf). 2022. Mating behavior and reproductive morphology predict macroevolution of sex allocation in hermaphroditic flatworms. **BMC Biology** 20:35.
 0. [Brand J. N., G. Viktorin, R. A. W. Wiberg, C. Beisel, and L. Schärer](/papers/brand2022b.pdf). 2022. Large-scale phylogenomics of the genus *Macrostomum* (Platyhelminthes) reveals cryptic diversity and novel sexual traits. **Molecular Phylogenetics and Evolution**. 166:107296.
