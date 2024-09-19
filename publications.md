@@ -3,6 +3,7 @@ layout: page
 bigimg: /img/books.png	
 title: Publications
 ---
+0. [Ivanković, M., J. N. Brand, L. Pandolfini, T. Brown, M. Pippel, A. Rozanski, T. Schubert, M. A. Grohme, S. Winkler, L. Robledillo, M. Zhang, A. Codino, S. Gustincich, M. Vila-Farré, S. Zhang, A. Papantonis, A. Marques, and J. C. Rink](https://doi.org/10.1038/s41467-024-52380-9). 2024. A comparative analysis of planarian genomes reveals regulatory conservation in the face of rapid structural divergence. **Nature Communications** 15:8215.
 0. [Vila-Farré, M., A. Rozanski, M. Ivanković, J. Cleland, J. N. Brand, F. Thalen, M. A. Grohme, S. von Kannen, A. L. Grosbusch, H. T.-K. Vu, C. E. Prieto, F. Carbayo, B. Egger, C. Bleidorn, J. E. J. Rasko, and J. C. Rink](https://www.nature.com/articles/s41559-023-02221-7). 2023. Evolutionary dynamics of whole-body regeneration across planarian flatworms. **Nature Ecology & Evolution**.
 0. [Gąsiorowski, L., I. L. Dittmann, J. N. Brand, T. Ruhwedel, W. Möbius, B. Egger, and J. C. Rink](https://doi.org/10.1186/s12915-023-01768-y). 2023. Convergent evolution of the sensory pits in and within flatworms. **BMC Biology** 21:266.
 0. [Brand, J. N](https://frontiersinzoology.biomedcentral.com/articles/10.1186/s12983-023-00509-9#Sec10). 2023. Support for a radiation of free-living flatworms in the African Great Lakes region and the description of five new Macrostomum species. **Frontiers in Zoology** 20:31.
