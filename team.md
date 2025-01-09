@@ -4,21 +4,10 @@ title: Team
 show-avatar: false
 ---
 
-## Principal Investigator ##
+#### Name: Jeremias N. Brand ####
+- **Position:** Group Leader
+- **Email:** jeremias.brand@unibas.ch
+- **[CV](http://jeremias-brand.github.io/files/CV_only.pdf)**
 
-### Lab Members ###
-
-#### Name: [Member Name] ####
-- **Position:** [Position]
-- **Email:** [Email]
-- **Research Interests:** [Research Interests]
-
-#### Name: [Member Name] ####
-- **Position:** [Position]
-- **Email:** [Email]
-- **Research Interests:** [Research Interests]
-
-#### Name: [Member Name] ####
-- **Position:** [Position]
-- **Email:** [Email]
-- **Research Interests:** [Research Interests]
+I am currently Recruiting a PhD Student.
+If you are interested in the position get in touch.

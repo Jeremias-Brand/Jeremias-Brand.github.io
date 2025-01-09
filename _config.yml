@@ -26,9 +26,9 @@ navbar-links:
   Team: "team"
   Research Interests: "aboutme"
   Research:
-    - Morphology: "morphometry"
+    - Ecology: "ecology"
+    - Morphology: "morphology"
     - Electron Microscopy: "em"
-  CV: "http://jeremias-brand.github.io/files/CV_only.pdf"
   Publications: "publications"
 
 
