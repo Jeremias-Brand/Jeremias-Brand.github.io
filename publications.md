@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: minimal
 bigimg: /img/books.jpg	 
 title: Publications
 ---
