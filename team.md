@@ -5,7 +5,7 @@ show-avatar: false
 ---
 
 ## Principal Investigator ##
-```
+
 ### Lab Members ###
 
 #### Name: [Member Name] ####
@@ -22,4 +22,3 @@ show-avatar: false
 - **Position:** [Position]
 - **Email:** [Email]
 - **Research Interests:** [Research Interests]
-```
