@@ -30,6 +30,7 @@ navbar-links:
     - Morphology: "morphology"
     - Electron Microscopy: "em"
   Publications: "publications"
+  Simple: "simple"
 
 
 # Image to show in the navigation bar - image must be a square (width = height)
