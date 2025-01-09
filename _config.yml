@@ -23,13 +23,14 @@ description: Jeremias Brand's Website
 
 # List of links in the navigation bar
 navbar-links:
+  Team: "team"
   Research Interests: "aboutme"
   Research:
     - Morphology: "morphometry"
     - Electron Microscopy: "em"
   CV: "http://jeremias-brand.github.io/files/CV_only.pdf"
   Publications: "publications"
-#  Rink Department: "https://www.mpinat.mpg.de/rink"
+
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
