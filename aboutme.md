@@ -2,7 +2,7 @@
 layout: page
 bigimg: /img/plankton.jpeg
 title: Research Interests
-classes: wide
+full-width: true
 ---
 
 I am an evolutionary biologist interested in the origins and consequences of sex. 
