@@ -103,3 +103,11 @@ body {
     transition: transform 0.3s ease-in-out;
   }
   
+
+  .image-text-grid {
+    border: 2px dashed red;
+  }
+  
+  .image-text-grid > * {
+    border: 2px dashed blue;
+  }
