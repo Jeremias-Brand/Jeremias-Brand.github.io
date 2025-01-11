@@ -1,11 +1,13 @@
 ---
 layout: home
 use-site-title: true
-title: Welcome to the Ambizione research group of Dr. Jeremias N. Brand.
+title: Brand Group
+subtitle: We investigate flatworm biodiversity to understand their evolutionary history and learn about the process of speciation.
 bigimg: /img/bg/pexels-adrien-olichon.jpg
 css: "/css/home.css"
 full_width: true
 ---
+
 
 <h1> We are investigating the biodiversity of *Macrostomum* flatworms in East Africa to understand their evolutionary history and learn about the process of speciation.</h1>
 
