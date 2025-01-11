@@ -9,8 +9,6 @@ full_width: true
 ---
 
 
-<h1> We are investigating the biodiversity of *Macrostomum* flatworms in East Africa to understand their evolutionary history and learn about the process of speciation.</h1>
-
 <h2>Why do some lineages diversify while others do not?</h2>
 <div class="image-text-grid">
   <img src="/img/home/fig_intro_00.png" alt="Research Highlight 1">
