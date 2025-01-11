@@ -2,7 +2,6 @@
 layout: home
 use-site-title: true
 title: Brand Group
-subtitle: SNFS Ambizione Research Group
 bigimg: /img/plankton.jpeg
 css: "/css/home.css"
 full_width: true

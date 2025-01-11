@@ -69,7 +69,7 @@ body {
   /* Grid container */
   .image-text-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* More adaptive to screen size */
+    grid-template-columns: repeat(2, minmax(350px, 1fr)); /* More adaptive to screen size */
     gap: 3rem;
     align-items: center;
     padding: 0;
@@ -83,21 +83,24 @@ body {
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Stronger shadow for dark background */
   }
-  
-  /* Text container */
+
+
+  /* 
+ 
   .image-text-grid h2 {
-    font-size: 2rem; /* Larger and modern text size */
-    color: #ffcc00; /* Highlight color for headings */
+    font-size: 2rem; 
+    color: #ffcc00; 
     margin-bottom: 1rem;
   }
   
   .image-text-grid p {
-    font-size: 1.25rem; /* Larger text */
+    font-size: 1.25rem; 
     margin: 0;
-    color: #e0e0e0; /* Softer light text for better readability */
+    color: #e0e0e0; 
     text-align: justify;
   }
-  
+  */
+
 /********** RESPONSIVENESS **********/
 /* Responsiveness for smaller screens */
 
