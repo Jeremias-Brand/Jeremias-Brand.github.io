@@ -58,6 +58,13 @@ body {
     margin: 0;
     padding: 0;
   }
+
+  .full-width-content {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+}
   
   /* Grid container */
   .image-text-grid {
@@ -72,7 +79,7 @@ body {
   
   /* Image styling */
   .image-text-grid img {
-    max-width: 400px; /* Limit image width */
+    max-width: 50%; /* Limit image width */
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Stronger shadow for dark background */
   }
@@ -119,9 +126,3 @@ body {
   }
 
 
-  .full-width-content {
-    width: 100%;
-    max-width: none;
-    padding: 0;
-    margin: 0;
-}
