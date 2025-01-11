@@ -2,12 +2,14 @@
 layout: home
 use-site-title: true
 title: Brand Group
-subtitle: We study flatworm biodiversity to learn their evolutionary history and understand the process of speciation.
 bigimg: /img/bg/pexels-adrien-olichon.jpg
 css: "/css/home.css"
 full_width: true
 ---
 
+<div class="hero-content">
+<h2>We study flatworm biodiversity to learn their evolutionary history and understand the process of speciation.</h2>
+</div>
 
 <h2>Why do some lineages diversify while others do not?</h2>
 <div class="image-text-grid">
