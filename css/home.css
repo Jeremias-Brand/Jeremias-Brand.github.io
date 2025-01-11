@@ -79,14 +79,12 @@ body {
   
   /* Text container */
   .image-text-grid h2 {
-    max-width: 400px;
     font-size: 2rem; /* Larger and modern text size */
     color: #ffcc00; /* Highlight color for headings */
     margin-bottom: 1rem;
   }
   
   .image-text-grid p {
-    max-width: 400px;
     font-size: 1.25rem; /* Larger text */
     margin: 0;
     color: #e0e0e0; /* Softer light text for better readability */
