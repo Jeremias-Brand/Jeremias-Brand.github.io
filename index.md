@@ -7,7 +7,7 @@ css: "/css/home.css"
 full_width: true
 ---
 
-Welcome to the Ambizione research group of Dr. Jeremias N. Brand. We are investigating the biodiversity of Macrostomum flatworms in East Africa to understand their evolutionary history and learn about the process of speciation. 
+Welcome to the Ambizione research group of Dr. Jeremias N. Brand. We are investigating the biodiversity of *Macrostomum* flatworms in East Africa to understand their evolutionary history and learn about the process of speciation. 
 
 <div class="image-text-grid">
   <img src="/img/home/fig_intro_00.png" alt="Research Highlight 1">

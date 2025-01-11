@@ -79,9 +79,12 @@ body {
   
   /* Image styling */
   .image-text-grid img {
-    max-width: 100%; /* Limit image width */
+    align-self: start;
+    max-width: 100%;
     border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Stronger shadow for dark background */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    margin-top: 1rem; /* Dynamic top margin for spacing */
+    padding: 1rem; /* Dynamic padding around the image */
   }
 
 
@@ -110,15 +113,16 @@ body {
     transition: transform 0.3s ease-in-out;
   }
   
-
+/* 
   .image-text-grid {
     border: 2px dashed red;
   }
 
-  /* Border for all */
+  /* Border for all *//*
   .image-text-grid > * {
     border: 2px dashed blue;
   }
+*/
 
   @media (max-width: 768px) {
     .image-text-grid {
