@@ -2,7 +2,7 @@
 layout: home
 use-site-title: true
 title: Welcome to the Ambizione research group of Dr. Jeremias N. Brand.
-bigimg: /img/plankton.jpeg
+bigimg: /img/bg/pexels-adrien-olichon.jpg
 css: "/css/home.css"
 full_width: true
 ---
