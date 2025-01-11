@@ -73,7 +73,7 @@ body {
     gap: 3rem;
     align-items: center;
     padding: 0;
-    width: 90%;
+    width: 100%;
     margin: 0 auto; /* Center the grid */
   }
   
@@ -112,7 +112,7 @@ body {
     border: 2px dashed red;
   }
 
-  /* Border for all child elements of image-text-grid */
+  /* Border for all */
   .image-text-grid > * {
     border: 2px dashed blue;
   }
