@@ -87,11 +87,11 @@ body {
   /* Grid container */
   .image-text-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 4fr)); /* More adaptive to screen size */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* More adaptive to screen size */
     gap: 3rem;
     align-items: center;
     padding: 2rem;
-    max-width: 4000px;
+    width: 90%;
     margin: 0 auto; /* Center the grid */
   }
   
