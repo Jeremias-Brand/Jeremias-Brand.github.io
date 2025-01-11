@@ -25,7 +25,9 @@ common-js:
   
     {% include nav.html %}
 
-    {{ content }}
+    <div class="{% if page.full_width %}full-width-content{% else %}container{% endif %}">
+      {{ content }}
+    </div>
 
     {% include footer.html %}
   

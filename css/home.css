@@ -117,4 +117,11 @@ body {
       margin-bottom: 1rem; /* Add spacing when stacked */
     }
   }
-  
+
+
+  .full-width-content {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+}

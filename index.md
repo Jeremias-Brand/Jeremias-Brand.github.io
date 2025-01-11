@@ -5,6 +5,7 @@ title: Brand Group
 subtitle: SNFS Ambizione Research Group
 bigimg: /img/plankton.jpeg
 css: "/css/home.css"
+full_width: true
 ---
 
 # Welcome to Our Research Group
