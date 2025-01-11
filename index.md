@@ -18,11 +18,12 @@ Welcome to the Ambizione research group of Dr. Jeremias N. Brand. We are investi
   </div>
 
 <h2><i>Macrostomum</i> - an ideal model.</h2>
-  <img src="/img/anfora15_boat.jpg" alt="Research Highlight 2">
+  <img src="/img/MPE_Fig_2A.png" alt="Research Highlight 2">
   <div>
     <p>In particular, we will study the contribution of the extrinsic environmental factors and the species' inherent intrinsic factors, such as the intensity of sexual selection or a species’ adaptations to the environment. This groundbreaking effort will be the first investigation of an adaptive radiation in free-living flatworms and substantially contribute to answering why speciation occurs in general.
     The direct comparison between the Macrostomum radiation and the exquisitely studied cichlid radiation is particularly interesting. In the case of the cichlids, the radiations have proceeded in stages, with species first expanding into macrohabitats, followed by microhabitats, and finally differentiating their colors due to sexual selection. We will use the Macrostomum system to elucidate if it also follows this stages-model. Furthermore, we will investigate how different mating systems affect speciation rate.</p>
   </div>
+
 
   <h2>Meiofauna Ecology</h2>
   <img src="/img/anfora15_boat.jpg" alt="Research Highlight 2">
