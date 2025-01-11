@@ -2,7 +2,7 @@
 layout: home
 use-site-title: true
 title: Brand Group
-subtitle: We investigate flatworm biodiversity to understand their evolutionary history and learn about the process of speciation.
+subtitle: We study flatworm biodiversity to learn their evolutionary history and understand the process of speciation.
 bigimg: /img/bg/pexels-adrien-olichon.jpg
 css: "/css/home.css"
 full_width: true
