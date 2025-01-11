@@ -72,14 +72,14 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* More adaptive to screen size */
     gap: 3rem;
     align-items: center;
-    padding: 2rem;
+    padding: 0;
     width: 90%;
     margin: 0 auto; /* Center the grid */
   }
   
   /* Image styling */
   .image-text-grid img {
-    max-width: 50%; /* Limit image width */
+    max-width: 100%; /* Limit image width */
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Stronger shadow for dark background */
   }
@@ -111,7 +111,8 @@ body {
   .image-text-grid {
     border: 2px dashed red;
   }
-  
+
+  /* Border for all child elements of image-text-grid */
   .image-text-grid > * {
     border: 2px dashed blue;
   }
