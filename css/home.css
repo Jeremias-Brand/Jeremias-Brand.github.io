@@ -117,17 +117,9 @@ body {
     text-align: justify;
   }
   
-
+/********** RESPONSIVENESS **********/
 /* Responsiveness for smaller screens */
-@media (max-width: 768px) {
-    .image-text-grid {
-      grid-template-columns: 1fr; /* Stack items vertically */
-    }
-    .image-text-grid img {
-      margin-bottom: 1rem; /* Add spacing when stacked */
-    }
-  }
-  
+
   /* Add hover effect for images */
   .image-text-grid img:hover {
     transform: scale(1.05);
