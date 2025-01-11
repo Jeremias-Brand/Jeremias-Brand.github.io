@@ -1,13 +1,13 @@
 ---
 layout: home
 use-site-title: true
-title: Brand Group
+title: Welcome to the Ambizione research group of Dr. Jeremias N. Brand.
 bigimg: /img/plankton.jpeg
 css: "/css/home.css"
 full_width: true
 ---
 
-Welcome to the Ambizione research group of Dr. Jeremias N. Brand. We are investigating the biodiversity of *Macrostomum* flatworms in East Africa to understand their evolutionary history and learn about the process of speciation. 
+<h1> We are investigating the biodiversity of *Macrostomum* flatworms in East Africa to understand their evolutionary history and learn about the process of speciation.</h1>
 
 <h2>Why do some lineages diversify while others do not?</h2>
 <div class="image-text-grid">
