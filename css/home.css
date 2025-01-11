@@ -83,7 +83,7 @@ body {
     max-width: 100%;
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-    margin-top: 1rem; /* Dynamic top margin for spacing */
+    margin-top: 3rem; /* Dynamic top margin for spacing */
     padding: 1rem; /* Dynamic padding around the image */
   }
 
