@@ -8,8 +8,12 @@ full_width: true
 ---
 
 <div class="hero-content">
+<p>Welcome to the Brand Group. We use flatworms as model systems to understand how sexual reproduction shapes biodiversity.</p>
+<p>We are currently recuiting! Please get in touch if you are interested in a PhD or MSc project. I am also happy to support any grant applications for Postdocs to join the team.</p>
 <h2>Why do some lineages diversify while others do not?</h2>
 </div>
+
+
 
 <div class="image-text-grid">
   <img src="/img/home/fig_intro_02.jpg" alt="Research Highlight 1">
