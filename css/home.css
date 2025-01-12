@@ -25,6 +25,12 @@
     display: flex;
     justify-content: center;
   }
+
+  .hero-content p {
+    margin: 1rem;
+    padding-top: 4.5rem;
+    display: flex;
+  }
   
   /* Content Section */
   .content-section {
