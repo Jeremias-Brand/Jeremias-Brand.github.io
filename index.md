@@ -12,7 +12,7 @@ full_width: true
 <a href="http://www.salzburgerlab.org">Salzburger Lab</a> 
 for field work in Zambia and Tanzania. Flatworms are our model systems to study how sexual reproduction shapes biodiversity. Currently, our main focus is the adaptive radiation of flatworms in East Africa. </p>
 <h2>We are recruiting!</h2> 
-<p>As a new research group, we are looking for PhD and MSc students. Get in touch if you are interested. The PhD work will require estensive field work in East Africa. MSc projects can be exclusively based in Basel or also involve field work, depending on interest. I do not have funding for a Postdoc position but would be delighted to support any grant applications for a Postdocs to join the team.</p>
+<p>As a new research group, we are looking for PhD and MSc students. Get in touch if you are interested. The PhD work will require extensive field work in East Africa. MSc projects can be exclusively based in Basel or also involve field work, depending on interest. I do not have funding for a Postdoc position but would be delighted to support any grant applications for a Postdocs to join the team.</p>
 
 <div style="text-align: center; margin-top: 20px;">
 <a href="/join.md" 
