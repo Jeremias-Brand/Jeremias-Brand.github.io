@@ -115,16 +115,16 @@ body {
     transition: transform 0.3s ease-in-out;
   }
   
-
+/*
   .image-text-grid {
     border: 2px dashed red;
   }
 
-  /* Border for all */
+  /* Border for all *//*
   .image-text-grid > * {
     border: 2px dashed blue;
   }
-
+  */
 
   @media (max-width: 768px) {
     .image-text-grid {
