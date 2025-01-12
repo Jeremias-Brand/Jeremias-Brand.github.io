@@ -12,7 +12,7 @@ full_width: true
 
 <h2>Why do some lineages diversify while others do not?</h2>
 <div class="image-text-grid">
-  <img src="/img/home/fig_intro_02.png" alt="Research Highlight 1">
+  <img src="/img/home/fig_intro_02.jpg" alt="Research Highlight 1">
   <div>
     <p>Adaptive radiations, a process characterized by rapid speciation combined with the emergence of a high diversity of habitats and morphological adaptations, have long been recognized as a key driver of biodiversity. Many adaptive radiations occur when species colonize a new environment, such as an island or lake, leading to high ecological and morphological diversity. However, it is hard to predict if a specific lineages will give rise to an adaptive radiation. The mere presence of ecological opportunity is not sufficient since many species closely related to a radiating one do not radiate.</p> 
     <p>Among the best-studied adaptive radiations are the cichlid fishes in Lake Tanganyika, Lake Malawi, and Lake Victoria. Decades of study have revealed important drivers of these radiations. Other taxa have also diversified in these lakes but these radiations have received much less attention than the cichlids. Therefore, it is unclear whether the insights gained from the cichlid system can be generalized. During my PhD research we have found evidence suggesting that a radiation of <i>Macrostomum</i> flatworms has occurred in the region offerening an excellent opportunity to for such investigations.</p>
