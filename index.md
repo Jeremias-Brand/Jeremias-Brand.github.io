@@ -2,7 +2,7 @@
 layout: home
 use-site-title: true
 title: Brand Group
-bigimg: /img/bg/pexels-adrien-olichon.jpg
+bigimg: /img/plankton.jpeg
 css: "/css/home.css"
 full_width: true
 ---
