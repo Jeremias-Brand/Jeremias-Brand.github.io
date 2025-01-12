@@ -8,9 +8,9 @@ full_width: true
 ---
 
 <div class="hero-content">
+<h2>Why do some lineages diversify while others do not?</h2>
 </div>
 
-<h2>Why do some lineages diversify while others do not?</h2>
 <div class="image-text-grid">
   <img src="/img/home/fig_intro_02.jpg" alt="Research Highlight 1">
   <div>
@@ -21,15 +21,19 @@ full_width: true
   </div>
 </div>
 
+<div class="hero-content">
 <h2><i>Macrostomum</i> - an ideal model</h2>
+</div>
+
 <div class="image-text-grid">
   <img src="/img/Macrostomum_diversity_V2.png" alt="Research Highlight 2">
   <div>
     <p> (<a href="https://en.wikipedia.org/wiki/Macrostomum"><i>Macrostomum</i></a>) flatworms are small aquatic animals with a global distribution. They inhabit a variety of habitats from the interstitial spaces between sand grains on beaches to freshwater ponds attached to vegetation and they can even be found in wet moss. The worms are very small - between 1 - 3 millimeter in length - which means we can only look at them with a microscope. If we do that we quickly notice two things: They are transparent, which allows us to study their internal organs <i>in vivo</i> and they are an incredibly diverse group. <i>Macrostomum</i> show an large diversity in their body size and shape.</p>
   </div>
 </div>
-
+<div class="hero-content">
 <h2>Meiofauna Ecology</h2>
+</div>
 <div class="image-text-grid">
   <img src="/img/anfora15_boat.jpg" alt="Research Highlight 2">
   <div>
