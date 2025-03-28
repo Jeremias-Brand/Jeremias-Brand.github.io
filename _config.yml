@@ -14,26 +14,24 @@ baseurl: ""
 # Of course don't forget to change the username and projectname to YOUR username and project
 
 # Name of website
-title: Jeremias N. Brand
+title: Brand Group
 
 # Short description of your site
-description: Jeremias Brand's Website
+# description: Jeremias Brand's Website
 
 # --- Navigation bar options --- #
 
 # List of links in the navigation bar
 navbar-links:
-  Research Interests: "aboutme"
-  Research:
-    - Morphology: "morphometry"
-    - Electron Microscopy: "em"
-  CV: "http://jeremias-brand.github.io/files/CV_only.pdf"
+  News: "news"
   Publications: "publications"
-#  Rink Department: "https://www.mpinat.mpg.de/rink"
+  Team: "team"
+  Join Us: Join Us
+
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
-avatar: "http://jeremias-brand.github.io/img/Anfora2015_jeremias.jpg"
+# avatar: "http://jeremias-brand.github.io/img/Anfora2015_jeremias.jpg"
 bigimg: "http://jeremias-brand.github.io/img/diversity_stylet_2.png"
 # If you want to have an image logo in the top-left corner instead of the title text,
 # then specify the following parameter
@@ -118,6 +116,7 @@ markdown: kramdown
 highlighter: rouge
 permalink: /:year-:month-:day-:title/
 paginate: 5
+paginate_path: "/news/page:num/"
 
 kramdown:
   input: GFM

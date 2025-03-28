@@ -1,0 +1,143 @@
+/* Hero Image Section */
+.hero-image {
+    position: relative;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+  }
+  
+  .hero-content h1 {
+    color: #f1f1f1;
+    font-size: 6rem;
+    margin: 0;
+  }
+  
+  .hero-content h2 {
+    font-size: 2.5rem;
+    margin: 1rem;
+    padding-top: 6rem;
+    justify-content: center;
+  }
+
+  .hero-content p {
+    margin: 1rem;
+  }
+  
+  /* Content Section */
+  .content-section {
+    padding: 4rem 0;
+    background-color: #f9f9f9;
+  }
+  
+  .content-section h1, .content-section h2, .content-section h3 {
+    font-family: "Helvetica Neue", sans-serif;
+  }
+  
+  .content-section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  .content-section a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .content-section a:hover {
+    text-decoration: underline;
+  }
+
+
+
+
+/* General page styles *//*
+body {
+    background-color: #121212;
+    color: #ffffff; 
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    line-height: 1.8; 
+    margin: 0;
+    padding: 0;
+  }
+  */
+  .full-width-content {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+}
+  
+  /* Grid container */
+  .image-text-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(350px, 1fr)); /* More adaptive to screen size */
+    gap: 3rem;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    margin: 0 auto; /* Center the grid */
+  }
+  
+  /* Image styling */
+  .image-text-grid img {
+    align-self: start;
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    margin-top: 3rem; /* Dynamic top margin for spacing */
+    padding: 1rem; /* Dynamic padding around the image */
+  }
+
+
+  /* 
+ 
+  .image-text-grid h2 {
+    font-size: 2rem; 
+    color: #ffcc00; 
+    margin-bottom: 1rem;
+  }
+  
+  .image-text-grid p {
+    font-size: 1.25rem; 
+    margin: 0;
+    color: #e0e0e0; 
+    text-align: justify;
+  }
+  */
+
+/********** RESPONSIVENESS **********/
+/* Responsiveness for smaller screens */
+
+  /* Add hover effect for images */
+  .image-text-grid img:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+/*
+  .image-text-grid {
+    border: 2px dashed red;
+  }
+
+  /* Border for all *//*
+  .image-text-grid > * {
+    border: 2px dashed blue;
+  }
+  */
+
+  @media (max-width: 768px) {
+    .image-text-grid {
+      grid-template-columns: 1fr; /* Stack items vertically */
+    }
+    .image-text-grid img {
+      margin-bottom: 1rem; /* Add spacing when stacked */
+    }
+  }
+
+

@@ -1,6 +1,6 @@
 ---
 layout: page
-bigimg: /img/books.png	
+bigimg: /img/books.jpg	 
 title: Publications
 ---
 0. [Ivanković, M., J. N. Brand, L. Pandolfini, T. Brown, M. Pippel, A. Rozanski, T. Schubert, M. A. Grohme, S. Winkler, L. Robledillo, M. Zhang, A. Codino, S. Gustincich, M. Vila-Farré, S. Zhang, A. Papantonis, A. Marques, and J. C. Rink](https://doi.org/10.1038/s41467-024-52380-9). 2024. A comparative analysis of planarian genomes reveals regulatory conservation in the face of rapid structural divergence. **Nature Communications** 15:8215.
