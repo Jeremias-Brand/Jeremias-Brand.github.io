@@ -25,8 +25,8 @@ title: Brand Group
 navbar-links:
   News: "news"
   Publications: "publications"
-  Team: "team"
-  Join Us: Join Us
+  # Team: "team"
+  Join Us: "/files/PhD_biodiversity_east_africa.pdf"
 
 
 # Image to show in the navigation bar - image must be a square (width = height)

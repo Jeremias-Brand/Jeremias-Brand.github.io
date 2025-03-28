@@ -15,7 +15,7 @@ for field work in Zambia and Tanzania. Flatworms are our model systems to study 
 <p>As a new research group, we are looking for PhD and MSc students. Get in touch if you are interested. The PhD work will require extensive field work in East Africa. MSc projects can be exclusively based in Basel or also involve field work, depending on interest. I do not have funding for a Postdoc position but would be delighted to support any grant applications for a Postdocs to join the team.</p>
 
 <div style="text-align: center; margin-top: 20px;">
-<a href="/join.md" 
+<a href="/files/PhD_biodiversity_east_africa.pdf" 
        style="display: inline-block; padding: 10px 20px; margin-top: 10px; background-color: #404040; color: white; text-decoration: none; border-radius: 5px; font-size: 24px;">
       Join!
 </a>
