@@ -11,13 +11,11 @@ full_width: true
 <p>Welcome to the Brand Group. We are an Ambizione research group at the University of Basel. We collaborate with the 
 <a href="http://www.salzburgerlab.org">Salzburger Lab</a> 
 for field work in Zambia and Tanzania. Flatworms are our model systems to study how sexual reproduction shapes biodiversity. Currently, our main focus is the adaptive radiation of flatworms in East Africa. </p>
-<h2>We are recruiting!</h2> 
-<p>We are looking for MSc students. Get in touch via jeremias.brand@unibas.ch if you are interested in doing MSc projects. MSc projects can be exclusively based in Basel or involve field work, depending on interest. I do not have funding for a Postdoc position but would be delighted to support any grant applications for a Postdocs to join the team.</p>
+<p>If you are interested in doing a MSc with us get in touch via jeremias.brand@unibas.ch. Projects can be exclusively based in Basel or involve field work in East Africa, depending on interest. Currently, I do not have funding for a Postdoc position but I would be delighted to support any grant applications for a Postdocs to join the team.</p>
 
 
 <h2>Why do some lineages diversify while others do not?</h2>
 </div>
-
 
 
 <div class="image-text-grid">
