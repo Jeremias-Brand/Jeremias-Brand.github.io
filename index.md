@@ -12,14 +12,8 @@ full_width: true
 <a href="http://www.salzburgerlab.org">Salzburger Lab</a> 
 for field work in Zambia and Tanzania. Flatworms are our model systems to study how sexual reproduction shapes biodiversity. Currently, our main focus is the adaptive radiation of flatworms in East Africa. </p>
 <h2>We are recruiting!</h2> 
-<p>As a new research group, we are looking for PhD and MSc students. See details about the PhD position below and get in touch via jeremias.brand@unibas.ch if you are interested in MSc projects. The PhD work will require extensive field work in East Africa. MSc projects can be exclusively based in Basel or also involve field work, depending on interest. I do not have funding for a Postdoc position but would be delighted to support any grant applications for a Postdocs to join the team.</p>
+<p>We are looking for MSc students. Get in touch via jeremias.brand@unibas.ch if you are interested in doing MSc projects. MSc projects can be exclusively based in Basel or involve field work, depending on interest. I do not have funding for a Postdoc position but would be delighted to support any grant applications for a Postdocs to join the team.</p>
 
-<div style="text-align: center; margin-top: 20px;">
-<a href="/files/PhD_biodiversity_east_africa.pdf" 
-       style="display: inline-block; padding: 10px 20px; margin-top: 10px; background-color: #404040; color: white; text-decoration: none; border-radius: 5px; font-size: 24px;">
-      Apply for PhD!
-</a>
-</div>
 
 <h2>Why do some lineages diversify while others do not?</h2>
 </div>
